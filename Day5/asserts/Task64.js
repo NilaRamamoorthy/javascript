@@ -11,4 +11,6 @@ const doubleNumbers = (arr) => {
 const numbers = [1, 2, 3, 4, 5];
 const doubled = doubleNumbers(numbers);
 
-console.log(doubled);
+for(i=0;i<=doubled.length-1;i++){
+    console.log(doubled[i]);
+    }
