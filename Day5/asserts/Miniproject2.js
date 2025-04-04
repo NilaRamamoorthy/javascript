@@ -1,9 +1,9 @@
 var myarr=["apple","orange","grapes","banana","strawberry","brocoli","potato"]
-function display(arr)
+function display()
 {
-    for(i=0;i<=arr.length-1;i++)
+    for(i=0;i<=myarr.length-1;i++)
     {
-    console.log(arr[i]);
+    console.log(myarr[i]);
     }
 }
    function add(arr, fruit) {
@@ -17,7 +17,7 @@ for(i=0;i<=myarr.length-1;i++)
     if(myarr[i]===fru)
     {
         delete(myarr[i])
-        var count=1
+        ++count
         continue
     }
     
@@ -40,8 +40,9 @@ if(input==2){
 }
 if(input==3){
     var fru=prompt("Enter an item to delete from grocery list")
+    var count=0
     del(fru);
-    if(count!==0){
+    if(count==0){
     console.log("The item you entered is not in the list");
     
 }
