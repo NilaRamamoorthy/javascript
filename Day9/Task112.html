@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Javascript Day9</title>
+    <style>
+        body {
+            margin-top: 10%;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="background">
+        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Animi ratione perferendis, dolore ipsam explicabo
+            repudiandae quasi, dolor dolorem enim sunt nesciunt eum est dolores soluta eligendi laborum obcaecati?
+            Tenetur, aspernatur.</p>
+        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Animi ratione perferendis, dolore ipsam explicabo
+            repudiandae quasi, dolor dolorem enim sunt nesciunt eum est dolores soluta eligendi laborum obcaecati?
+            Tenetur, aspernatur.</p>
+        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Animi ratione perferendis, dolore ipsam explicabo
+            repudiandae quasi, dolor dolorem enim sunt nesciunt eum est dolores soluta eligendi laborum obcaecati?
+            Tenetur, aspernatur.</p>
+        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Animi ratione perferendis, dolore ipsam explicabo
+            repudiandae quasi, dolor dolorem enim sunt nesciunt eum est dolores soluta eligendi laborum obcaecati?
+            Tenetur, aspernatur.</p>
+        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Animi ratione perferendis, dolore ipsam explicabo
+            repudiandae quasi, dolor dolorem enim sunt nesciunt eum est dolores soluta eligendi laborum obcaecati?
+            Tenetur, aspernatur.</p>
+        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Animi ratione perferendis, dolore ipsam explicabo
+            repudiandae quasi, dolor dolorem enim sunt nesciunt eum est dolores soluta eligendi laborum obcaecati?
+            Tenetur, aspernatur.</p>
+    </div>
+    <button onclick="changeColor()">
+        Click me
+    </button>
+
+
+    <script>
+   
+        function changeColor() {
+            const change = document.querySelectorAll("p");
+            change.forEach(p=>{ p.style.color = "violet";})
+           
+        }
+    </script>
+</body>
+
+</html>

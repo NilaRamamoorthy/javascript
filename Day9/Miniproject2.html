@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Real-Time Stopwatch</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      text-align: center;
+      padding: 50px;
+    }
+
+    #display {
+      font-size: 40px;
+      margin-bottom: 30px;
+      font-weight: bold;
+    }
+
+    button {
+      padding: 10px;
+      margin: 5px;
+      font-size: 18px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Stopwatch</h1>
+  <div id="display">0</div>
+
+  <button onclick="startTimer()">Start</button>
+  <button onclick="stopTimer()">Stop</button>
+  <button onclick="resetTimer()">Reset</button>
+
+  <script>
+    let count = 0;
+    let timer = null;
+
+    function updateDisplay() {
+      document.getElementById("display").textContent = count;
+    }
+
+    function startTimer() {
+      if (timer !== null) return;
+      timer = setInterval(() => {
+        count++;
+        updateDisplay(); 
+      }, 1000); 
+    }
+
+    function stopTimer() {
+      clearInterval(timer);
+      timer = null;
+    }
+
+    function resetTimer() {
+      stopTimer();
+      count = 0;
+      updateDisplay();
+    }
+  </script>
+
+</body>
+</html>

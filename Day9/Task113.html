@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <img id="flower" src="https://i.pinimg.com/236x/c6/4e/93/c64e935d4e028e04cf3dd4be1fd06397.jpg">
+    <script>
+        const border = document.getElementById("flower");
+        border.addEventListener("mouseover", () => {
+            border.style.border = "6px solid black";
+        })
+        border.addEventListener("mouseout", () => {
+            border.style.border = "none";
+        })
+    </script>
+</body>
+
+</html>

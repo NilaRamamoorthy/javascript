@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+       
+    </style>
+</head>
+<body>
+    <h3>Shopping List</h3>
+    <ol id="Shopping">
+        <li>Apple</li>
+        <li>Orange</li>
+        <li>Banana</li>
+        <li>Strawberry</li>
+    </ol>
+    <button onclick="addItem()">Add Item</button>
+ <button onclick="removeItem()">Remove Item</button>
+    <script>
+        function addItem(){
+        const li= document.createElement('li');
+        li.innerText="Grapes";
+        document.getElementById("Shopping").appendChild(li)
+        }
+        function removeItem() {
+      const list = document.getElementById('Shopping');
+      if (list.lastElementChild) {
+        list.removeChild(list.lastElementChild);
+      } else {
+        alert("No more items to remove!");
+      }
+    }
+        
+    </script>
+</body>
+</html>

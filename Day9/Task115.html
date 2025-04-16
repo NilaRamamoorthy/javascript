@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2 id="head">Hello...</h2>
+    <button onclick="toggleText()">Toggle</button>
+    <script>
+        let toggled=false;
+       function toggleText() {
+      const textDiv = document.getElementById("head");
+
+      if (toggled) {
+        textDiv.textContent = "Hello, World!";
+      } else {
+        textDiv.textContent = "Welcome to JavaScript!";
+      }
+
+      toggled = !toggled; 
+    }
+    </script>
+</body>
+</html>

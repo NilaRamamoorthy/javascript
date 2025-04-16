@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Javascript Day9</title>
+    <style>
+        body {
+            margin-top: 10%;
+        }
+
+        #btn-bg {
+            width: 70px;
+            height: 70px;
+            margin-left: 10%;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="background">
+        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Animi ratione perferendis, dolore ipsam explicabo
+            repudiandae quasi, dolor dolorem enim sunt nesciunt eum est dolores soluta eligendi laborum obcaecati?
+            Tenetur, aspernatur.</p>
+    </div>
+    <button id="btn-bg" onclick="changeBackground()">
+        Click to change Bg
+    </button>
+
+
+    <script>
+        const change = document.getElementById("background");
+        function changeBackground() {
+            change.style.backgroundColor = "red"
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="content">
+        <div id="head">
+            <h1 id="title">Heading</h1>
+        </div>
+        <div id="para">
+        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Earum provident, nam corporis repellendus, adipisci
+            delectus optio, harum cupiditate animi error quasi praesentium sapiente nulla obcaecati rem nisi incidunt
+            nostrum esse!</p>
+        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Earum provident, nam corporis repellendus, adipisci
+            delectus optio, harum cupiditate animi error quasi praesentium sapiente nulla obcaecati rem nisi incidunt
+            nostrum esse!</p>
+        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Earum provident, nam corporis repellendus, adipisci
+            delectus optio, harum cupiditate animi error quasi praesentium sapiente nulla obcaecati rem nisi incidunt
+            nostrum esse!</p>
+        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Earum provident, nam corporis repellendus, adipisci
+            delectus optio, harum cupiditate animi error quasi praesentium sapiente nulla obcaecati rem nisi incidunt
+            nostrum esse!</p>
+        </div>
+    </div>
+    <button onclick="add()">Add</button>
+    <button onclick="remove()">Remove</button>
+    <button onclick="change()">Change</button>
+</body>
+<script>
+    function add() {
+        let heading = document.createElement("h2");
+        heading.innerText = "2nd Heading";
+        document.getElementById("head").appendChild(heading)
+    }
+    function remove(){
+        let remove=document.getElementById("para");
+        remove.innerHTML="";
+    }
+    function change(){
+        let change=document.getElementById("title");
+        change.innerText="Welcome";
+    }
+</script>
+
+</html>

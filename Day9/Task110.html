@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Click to Remove Item</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+     li {
+      margin: 5px 0;
+      padding: 10px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      
+    }
+
+    li:hover {
+      background-color: #ddd;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Click on the Item to Remove</h2>
+
+  <ul id="myList">
+    <li onclick="removeThis(this)">Grapes</li>
+    <li onclick="removeThis(this)">Orange</li>
+    <li onclick="removeThis(this)">Apple</li>
+    <li onclick="removeThis(this)">Mango</li>
+    <li onclick="removeThis(this)">Pineapple</li>
+    <li onclick="removeThis(this)">Strawberry</li>
+  </ul>
+
+  <script>
+    function removeThis(element) {
+      element.parentNode.removeChild(element);
+    }
+  </script>
+
+</body>
+</html>

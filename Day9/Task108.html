@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            text-align: center;
+            margin-top: 10%;
+        }
+    </style>
+</head>
+<body>
+    <div id="box">Hello, I’m visible!</div>
+    <button onclick="toggleBox()">Toggle Box</button>
+  
+    <script>
+      function toggleBox() {
+        const box = document.getElementById('box');
+        if (box.style.display === 'none') {
+          box.style.display = 'block'; 
+        } else {
+          box.style.display = 'none'; 
+        }
+      }
+    </script>
+  
+</body>
+</html>

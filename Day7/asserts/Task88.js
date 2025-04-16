@@ -13,6 +13,7 @@ const books=[
 ];
 
 let filter=books.filter((val)=>val.price<=300)
+
 filter.forEach(book => {
     console.log(`${book.title} by ${book.author} - ₹${book.price}`);
   });
