@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        #specificArea{
+            height: 200px;
+            width: 30%;
+            cursor: pointer;
+            background-color: rgb(227, 6, 43);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    
+    </style>
+</head>
+<body>
+    <div id="specificArea">
+<h3>Hover over</h3>
+    </div>
+    <script>
+         const hover = document.getElementById("specificArea");
+        hover.addEventListener("mouseenter", ()=> {
+           alert("This is a specific area");
+        })
+
+    </script>
+</body>
+</html>

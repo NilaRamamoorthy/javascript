@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        #input{
+            margin-top: 10%;
+        }
+        #retrieve{
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="input">
+        <input type="name" id="name" placeholder="Enter your name">
+        <button onclick="save()">Save</button>
+    </div>
+    <button id="retrieve" onclick="retrieve()">click to Retrieve</button>
+    <h4 id="display"></h4>
+    <script>
+        function save() {
+            let name = document.getElementById("name").value;
+            localStorage.setItem("username", name)
+            console.log(name);
+            document.getElementById("input").style.display = "none";
+        }
+        function retrieve() {
+            const storedName = localStorage.getItem("username")
+            console.log(storedName);
+            document.getElementById("display").innerText = `Hi ${storedName}... Welcome to the page!`
+        }
+    </script>
+</body>
+
+</html>

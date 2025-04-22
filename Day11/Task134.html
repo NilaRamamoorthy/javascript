@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .list {
+            display: inline-flex;
+            gap: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="list">
+        <div>
+            <p>Apple</p>
+            <button onclick="addItem('Apple')">Add to Cart</button>
+        </div>
+        <div>
+            <p>Orange</p>
+            <button onclick="addItem('Orange')">Add to Cart</button>
+        </div>
+        <div>
+            <p>Banana</p>
+            <button onclick="addItem('Banana')">Add to Cart</button>
+        </div>
+        <div>
+            <p>Grapes</p>
+            <button onclick="addItem('Grapes')">Add to Cart</button>
+        </div>
+    </div>
+    <h2>Your Cart:</h2>
+    <ul id="cart"></ul>
+    <script>
+        var cart = JSON.parse(localStorage.getItem("cart"))
+        function addItem(fruit) {
+            cart.push(fruit)
+            let li = document.createElement("li")
+            li.innerText = fruit;
+            document.getElementById("cart").appendChild(li)
+            localStorage.setItem("cart", JSON.stringify(fruit))
+        }
+        function updatedList() {
+
+        }
+    </script>
+</body>
+
+</html>

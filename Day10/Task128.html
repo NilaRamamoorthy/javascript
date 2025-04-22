@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        button {
+            cursor: pointer;
+        }
+    </style>
+
+</head>
+
+<body>
+    <button id="button" onclick="disappear()">Click to remove Paragraph</button>
+    <div id="para">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro magnam esse recusandae? Tempore quibusdam nulla,
+        exercitationem harum consequuntur eligendi perferendis laudantium inventore ex omnis dolor vitae velit, tenetur
+        voluptatem iste.
+    </div>
+    <script>
+        toggle = true
+        function disappear() {
+            var para = document.getElementById("para");
+            var button = document.getElementById("button")
+            if (toggle) {
+                para.style.display = "none";
+                button.innerText = "Click to read paragraph"
+            }
+            else {
+                para.style.display = "block";
+                button.innerText = "Click to remove paragraph"
+            }
+            toggle = !toggle
+        }
+    </script>
+</body>
+
+</html>

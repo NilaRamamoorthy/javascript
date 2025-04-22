@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        body.dark {
+            background-color: black;
+            color: white;
+        }
+
+        body.light {
+            background-color: white;
+            color: black;
+        }
+
+        p {
+            margin-top: 10%;
+        }
+
+        button {
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Assumenda vel deleniti eum nam fuga itaque qui delectus
+        deserunt nulla ex suscipit, temporibus dolores repudiandae est totam optio quae quia porro!</p>
+    <button onclick="theme()">Change Theme</button>
+    <script>
+         const body = document.body;
+        const savedtheme = localStorage.getItem("mode")
+        if (savedtheme) {
+            body.className = savedtheme;
+        }
+        else {
+            body.className = "light"
+        }
+        function theme() {
+            if (body.className === "light") {
+                body.className = "dark"
+                localStorage.setItem("mode", "dark")
+            }
+            else {
+                body.className = "light"
+                localStorage.setItem("mode", "light")
+            }
+        }
+    </script>
+</body>
+
+</html>

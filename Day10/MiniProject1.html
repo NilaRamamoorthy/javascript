@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Document</title>
+    <style>
+        body {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        button {
+            margin-top: 50px;
+            cursor: pointer;
+           
+        }
+
+        button:hover {
+            background-color: palegreen;
+        }
+        #clickCounter{
+            border: 1px solid black;
+            width: 200px;
+            height: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+</head>
+
+<body>
+    <h3>Click Counter App</h3>
+    <div id="clickCounter">Click count- 0 </div>
+    <div>
+        <button id="clickNo" onclick="clickCount()">Count</button>
+        <button id="reset" onclick="reset()">Reset</button>    
+    </div>
+     <script>
+        var count = 0;
+        function clickCount() {
+            count++;
+            const display = document.getElementById("clickCounter");
+            console.log(count);
+
+            display.textContent = `Click count- ${count}`;
+        }
+function reset(){
+    count=0;
+    const display = document.getElementById("clickCounter");
+            console.log(count);
+
+            display.textContent = `Click count- ${count}`;
+}
+
+    </script>
+
+</body>
+
+</html>

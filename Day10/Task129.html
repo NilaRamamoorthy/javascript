@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <title>Play Sound on Click</title>
+    <style>
+      body {
+        text-align: center;
+        padding-top: 50px;
+        font-family: Arial, sans-serif;
+      }
+  
+      button {
+        padding: 12px 24px;
+        font-size: 18px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <button onclick="playSound()">Play Sound</button>
+    <audio id="clickSound" src="./asserts/mixkit-sci-fi-click-900.wav"></audio>
+  
+    <script>
+      function playSound() {
+        const audio = document.getElementById("clickSound");
+        audio.play();
+      }
+    </script>
+  
+</body>
+</html>

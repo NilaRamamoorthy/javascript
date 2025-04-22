@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Image Preview Before Upload</title>
+  <style>
+    body {
+      text-align: center;
+      font-family: Arial, sans-serif;
+      padding-top: 50px;
+    }
+
+    input[type="file"] {
+      margin-bottom: 20px;
+    }
+
+    #preview {
+      width: 300px;
+      height: auto;
+      border: 2px dashed #ccc;
+      padding: 10px;
+      border-radius: 8px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Select an Image to Preview</h2>
+  <input type="file" id="imageInput" accept="image/*" />
+  <br>
+  <img id="preview" alt="Image Preview" />
+
+  <script>
+    const imageInput = document.getElementById("imageInput");
+    const preview = document.getElementById("preview");
+
+    imageInput.addEventListener("change", function() {
+      const file = this.files[0];
+
+      if (file) {
+        const reader = new FileReader();
+
+        reader.onload = function(event) {
+          preview.src = event.target.result;
+          preview.style.display = "block";
+        }
+
+        reader.readAsDataURL(file);
+      } else {
+        preview.src = "";
+        preview.style.display = "none";
+      }
+    });
+  </script>
+
+</body>
+</html>

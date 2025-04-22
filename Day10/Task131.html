@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        img {
+            width: 300px;
+            height: 500px;
+        }
+
+        button {
+            margin-left: 30px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: goldenrod;
+        }
+    </style>
+</head>
+
+<body>
+    <img id="img" src="https://i.pinimg.com/236x/c6/4e/93/c64e935d4e028e04cf3dd4be1fd06397.jpg">
+    <button onclick="change()">Change</button>
+</body>
+<script>
+    toggle = true;
+    function change() {
+        let img = document.getElementById("img");
+        if (toggle) {
+            img.src = "https://images.unsplash.com/photo-1530092285049-1c42085fd395?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8Zmxvd2VyJTIwd2FsbHBhcGVyfGVufDB8fDB8fHww";
+        }
+        else {
+            img.src = "https://i.pinimg.com/236x/c6/4e/93/c64e935d4e028e04cf3dd4be1fd06397.jpg";
+        }
+        toggle = !toggle
+    }
+
+</script>
+
+</html>
