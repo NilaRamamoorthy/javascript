@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Simple Notes App</title>
+</head>
+<body>
+
+  <h2>Notes App</h2>
+
+  <textarea id="noteInput" placeholder="Write your note here..." rows="5" cols="50"></textarea><br>
+  <button onclick="addNote()">Add Note</button>
+
+  <div id="notesContainer"></div>
+
+  <script>
+    window.onload = function() {
+      showNotes();
+    };
+
+    function getNotes() {
+      return JSON.parse(localStorage.getItem('notes')) || [];
+    }
+
+    function saveNotes(notes) {
+      localStorage.setItem('notes', JSON.stringify(notes));
+    }
+
+    function showNotes() {
+      const container = document.getElementById('notesContainer');
+      container.innerHTML = '';
+      const notes = getNotes();
+      notes.forEach((note, index) => {
+        const noteDiv = document.createElement('div');
+        noteDiv.innerHTML = `
+          <p>${note}</p>
+          <button onclick="deleteNote(${index})">Delete</button>
+          <hr>
+        `;
+        container.appendChild(noteDiv);
+      });
+    }
+
+    function addNote() {
+      const input = document.getElementById('noteInput');
+      const text = input.value.trim();
+      if (text !== '') {
+        const notes = getNotes();
+        notes.push(text);
+        saveNotes(notes);
+        input.value = '';
+        showNotes();
+      }
+    }
+
+    function deleteNote(index) {
+      const notes = getNotes();
+      notes.splice(index, 1);
+      saveNotes(notes);
+      showNotes();
+    }
+  </script>
+
+</body>
+</html>

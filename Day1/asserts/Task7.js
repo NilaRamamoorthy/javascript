@@ -1,6 +1,6 @@
-let a=100
-console.log(typeof a);
-a=a.toString()
-console.log(typeof a);
-a=parseInt(a)
-console.log(typeof a);
+let input=100
+console.log(typeof input);
+input=input.toString()
+console.log(typeof input);
+input=parseInt(input)
+console.log(typeof input);

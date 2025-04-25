@@ -1,10 +1,10 @@
-let a=null
-var b
+let input1=null
+var input2
 {
-    let c=8
+    let input3=8
 }
-console.log(a);
-console.log(b);
-console.log(c);
+console.log(input1);
+console.log(input2);
+console.log(input3);// not defined error is shown since it is declared in let with{}
 
 

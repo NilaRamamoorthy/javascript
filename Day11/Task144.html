@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Quiz App</title>
+</head>
+<body>
+
+  <h2>Simple Quiz</h2>
+  <div id="quizContainer"></div>
+  <button onclick="submitQuiz()">Submit</button>
+
+  <script>
+    const quizData = [
+      {
+        question: "What is the capital of India?",
+        options: ["Chennai", "London", "Delhi", "Madrid"],
+        correct: 3
+      },
+      {
+        question: "Which fruit is called king of fruits?",
+        options: ["Apple", "Mango", "Jackfruit", "Durian"],
+        correct: 4
+      },
+      {
+        question: "What is square of 3?",
+        options: ["12", "18", "9", "78"],
+        correct: 3
+      }
+    ];
+
+    const quizContainer = document.getElementById("quizContainer");
+
+    function loadQuiz() {
+      quizContainer.innerHTML = "";
+
+      quizData.forEach((item, index) => {
+        const savedAnswer = sessionStorage.getItem(`q${index}`);
+        const qBlock = document.createElement("div");
+        qBlock.innerHTML = `<p>${index + 1}. ${item.question}</p>`;
+        
+        item.options.forEach((option, optIndex) => {
+          const checked = savedAnswer == optIndex ? "checked" : "";
+          qBlock.innerHTML += `
+            <label>
+              <input type="radio" name="q${index}" value="${optIndex}" ${checked}>
+              ${option}
+            </label><br>
+          `;
+        });
+
+        quizContainer.appendChild(qBlock);
+        quizContainer.appendChild(document.createElement("hr"));
+      });
+    }
+
+    function saveAnswers() {
+      quizData.forEach((_, index) => {
+        const selected = document.querySelector(`input[name="q${index}"]:checked`);
+        if (selected) {
+          sessionStorage.setItem(`q${index}`, selected.value);
+        }
+      });
+    }
+
+    function submitQuiz() {
+      saveAnswers();
+
+      let score = 0;
+      quizData.forEach((q, index) => {
+        const answer = parseInt(sessionStorage.getItem(`q${index}`));
+        if (answer === q.correct) {
+          score++;
+        }
+      });
+
+      alert(`You scored ${score} out of ${quizData.length}`);
+    }
+
+    window.onload = loadQuiz;
+  </script>
+
+</body>
+</html>

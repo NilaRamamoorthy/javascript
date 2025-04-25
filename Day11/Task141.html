@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>JSON.parse Example</title>
+</head>
+<body>
+
+  <h2>JSON.parse() Demo</h2>
+  <p id="output"></p>
+
+  <script>
+    const jsonString = '{"name": "Lindt", "type": "Milk Chocolate", "rating": 4.8}';
+    const chocolate = JSON.parse(jsonString);
+    document.getElementById("output").textContent = 
+      `Name: ${chocolate.name}, Type: ${chocolate.type}, Rating: ${chocolate.rating}`;
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>JSON.stringify Example</title>
+</head>
+<body>
+
+  <h2>JSON.stringify() Demo</h2>
+  <button onclick="saveData()">Save Data</button>
+  <button onclick="loadData()">Load Data</button>
+  <p id="output"></p>
+
+  <script>
+    const chocolateData = {
+      name: "Lindt",
+      type: "Dark Chocolate",
+      rating: 4.9
+    };
+
+    function saveData() {
+      const jsonString = JSON.stringify(chocolateData);  
+      localStorage.setItem("chocoInfo", jsonString);    
+      alert("Data saved to localStorage!");
+    }
+
+    function loadData() {
+      const jsonString = localStorage.getItem("chocoInfo");
+      if (jsonString) {
+        const obj = JSON.parse(jsonString);              
+        document.getElementById("output").textContent =
+          `Name: ${obj.name}, Type: ${obj.type}, Rating: ${obj.rating}`;
+      } else {
+        document.getElementById("output").textContent = "No data found.";
+      }
+    }
+  </script>
+
+</body>
+</html>

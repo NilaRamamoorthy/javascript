@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Lindt Chocolate Survey</title>
+</head>
+<body>
+
+  <h2>Lindt Chocolate Survey</h2>
+
+  <form id="surveyForm">
+    <p>1. How often do you consume Lindt chocolate?</p>
+    <select name="frequency">
+      <option value="">--Select--</option>
+      <option value="Daily">Daily</option>
+      <option value="Weekly">Weekly</option>
+      <option value="Occasionally">Occasionally</option>
+      <option value="Rarely">Rarely</option>
+    </select>
+
+    <p>2. What's your favorite Lindt chocolate?</p>
+    <input type="text" name="favorite" placeholder="E.g., Lindor, Excellence">
+
+    <p>3. Would you recommend Lindt to others?</p>
+    <label><input type="radio" name="recommend" value="Yes"> Yes</label>
+    <label><input type="radio" name="recommend" value="No"> No</label>
+
+    <br><br>
+    <button type="submit">Submit</button>
+  </form>
+
+  <script>
+    const form = document.getElementById('surveyForm');
+
+    window.onload = () => {
+      const saved = JSON.parse(sessionStorage.getItem('lindtSurvey'));
+      if (saved) {
+        form.frequency.value = saved.frequency || "";
+        form.favorite.value = saved.favorite || "";
+        if (saved.recommend) {
+          const recommendRadio = form.querySelector(`input[name="recommend"][value="${saved.recommend}"]`);
+          if (recommendRadio) recommendRadio.checked = true;
+        }
+      }
+    };
+
+    form.onsubmit = function(e) {
+      e.preventDefault();
+
+      const surveyData = {
+        frequency: form.frequency.value,
+        favorite: form.favorite.value,
+        recommend: form.recommend.value
+      };
+
+      sessionStorage.setItem('lindtSurvey', JSON.stringify(surveyData));
+      alert("Thank you! Your response has been saved.");
+    };
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Oasis Kitchen - Order</title>
+  <link rel="stylesheet" href="./asserts/css/header.css">
+  <style>
+    .search-section {
+      text-align: center;
+      padding: 40px 20px;
+    }
+    .search-section h2 {
+      margin-bottom: 20px;
+      color: #0b5d47;
+    }
+    .search-boxes {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-bottom: 40px;
+    }
+    .search-boxes input {
+      padding: 10px 20px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      width: 250px;
+    }
+    .popular {
+      text-align: center;
+      padding: 20px;
+    }
+    .popular h3 {
+      color: red;
+      margin-bottom: 30px;
+    }
+    .cuisine-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 30px;
+      padding: 0 40px;
+      justify-items: center;
+    }
+    .cuisine-item img {
+      border-radius: 50%;
+      width: 120px;
+      height: 120px;
+      object-fit: cover;
+    }
+    .cuisine-item p {
+      margin-top: 10px;
+      font-weight: bold;
+    }
+  
+  </style>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg shadow-sm">
+    <div class="container">
+        <a href="">
+            <div class="logo">
+                <div class="logo-circle">OK</div>
+                <h1 style="font-style: underline;">Oasis Kitchen</h1>
+            </div>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+            <span class="navbar-toggler-icon-light"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarContent">
+
+            <ul class="navbar-nav mx-auto mb-2 mb-lg-0 fw-bold">
+                <li class="nav-item">
+                    <a class="nav-link active" href="#">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Blog</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Pricing</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Order</a>
+                </li>
+            </ul>
+
+            <div class="d-flex gap-3" id="icon">
+                <a href="#"><img src="./asserts/Icons/shopping-cart icon.png"></a>
+                <a href="#"><img src="./asserts/Icons/heart icon.png"></a>
+                <a href="#"><img src="./asserts/Icons/user icon.png"></a>
+            </div>
+        </div>
+    </div>
+</nav>
+  <section class="search-section">
+    <h2>Order your Food</h2>
+    <div class="search-boxes">
+      <input type="text" placeholder="📍 Enter your location" />
+      <input type="text" placeholder="🔍 Search your food or restaurant" />
+    </div>
+  </section>
+
+  <section class="popular">
+    <h3>Our Popular Cuisines</h3>
+    <div class="cuisine-grid">
+      <div class="cuisine-item">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSUkFl4-e90gihmLEM7TZZ-LTbwkWQ47VaLMQ&s" alt="Biryani">
+        <p>Biryani</p>
+      </div>
+      <div class="cuisine-item">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSl-rLUD43I0vsmyQGSrgwl65knHjr_ZLNg1w&s" alt="Rolls">
+        <p>Rolls</p>
+      </div>
+      <div class="cuisine-item">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQTxb-7numMlJj2cDy8Wpt-jt_eh2IxwDY-Lw&s" alt="South Indian">
+        <p>South Indian</p>
+      </div>
+      <div class="cuisine-item">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRO-aHqXeQ6fSIOb75z7hiRWpj_Y_Xz5nAvoQ&s" alt="Cake">
+        <p>Cake</p>
+      </div>
+      <div class="cuisine-item">
+        <img src="https://focus.hidubai.com/content/images/2023/04/3.png" alt="Icecream">
+        <p>Icecream</p>
+      </div>
+      <div class="cuisine-item">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZQftsuVA4z-5LI7hsJCPOc7c-zmQNMj5S5Q&s" alt="Sandwich">
+        <p>Sandwich</p>
+      </div>
+    </div>
+  </section>
+
+  <footer class=" py-4">
+    <div class="container d-flex flex-row justify-content-between flex-wrap text-start">
+
+        <div class="me-4 mb-3">
+            <h4>Oasis Kitchen</h4>
+            <p>Subscribe</p>
+            <p>Get 10% off your first product</p>
+        </div>
+
+        <div class="me-4 mb-3">
+            <h4>Support</h4>
+            <p>11, Gandhi Nagar, Chennai.</p>
+            <p>exdaku@gmail.com</p>
+            <p>+123456789</p>
+        </div>
+
+        <div class="me-4 mb-3">
+            <h4>Blog</h4>
+            <p>Korean Kitchen</p>
+            <p>Successful Pizza</p>
+            <p>Festive Celebration</p>
+            <p>Memorable Dining</p>
+        </div>
+
+        <div class="me-4 mb-3">
+            <h4>Quick Link</h4>
+            <p>Terms of use</p>
+            <p>FAQ</p>
+            <p>Contact</p>
+        </div>
+
+    </div>
+
+    <div class="text-center m-4 footer-bottom d-flex justify-content-between">
+        <p>&copy; oasiskitchen.com</p>
+        <div>
+            <a href="#"><img src="./asserts/Icons/facebook icon.png"></a>
+            <a href="#"><img src="./asserts/Icons/instagram.png"></a>
+            <a href="#"><img src="./asserts/Icons/twitter icon.png"></a>
+
+        </div>
+    </div>
+</footer>
+
+</body>
+</html>

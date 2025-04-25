@@ -1,6 +1,6 @@
-function bol(a,b)
+function bol(bol1,bol2)
 {
-    if(a==b){
+    if(bol1==bol2){
         return true
     }
     else{

@@ -8,15 +8,17 @@ console.log("Hotal Name:"+hotel);
 console.log("Order Number:"+orderno);
 console.log("Items Ordered:"+fooditems);
 console.log("Total amount: Rs."+total);
-if(isDelivered==true)
-{
-    console.log("Delivery Status: Delivered");
-    
-}
-else{
-    console.log("Delivery Status: Not delivered");
-    
-}
+function delivery(status){
+    if(status==true)
+    {
+        console.log("Delivery Status: Delivered");
+        
+    }
+    else{
+        console.log("Delivery Status: Not delivered");
+        
+    }}
+delivery(true)
 var fooditems=fooditems+[,"chicken fry"]
 
 console.log(fooditems);
