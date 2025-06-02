@@ -21,6 +21,10 @@
       border-radius: 8px;
       display: none;
     }
+    .image{
+      display: flex;
+      justify-content: center;
+    }
   </style>
 </head>
 <body>
@@ -28,8 +32,9 @@
   <h2>Select an Image to Preview</h2>
   <input type="file" id="imageInput" accept="image/*" />
   <br>
+  <div class="image">
   <img id="preview" alt="Image Preview" />
-
+</div>
   <script>
     const imageInput = document.getElementById("imageInput");
     const preview = document.getElementById("preview");
