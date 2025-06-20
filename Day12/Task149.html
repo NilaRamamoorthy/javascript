@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Task149</h1>
+    <p>Find a specific product in an array by name. </p>
+  
+    <script>
+        const products = [
+            { name: "Sunscreen", price: 1200 },
+            { name: "Nail Polish", price: 800 },
+            { name: "Eyebrow pencil", price: 1200 },
+            { name: "Moisturizer", price: 1500 },
+            { name: "Serum", price: 500 }
+        ];
+
+        // Find a product by name and change its value
+        const searchName = "nail polish";
+        const foundProduct = products.find(
+            product => product.name.toLowerCase() === searchName.toLowerCase()
+        );
+        console.log(foundProduct);
+
+
+    </script>
+</body>
+
+</html>

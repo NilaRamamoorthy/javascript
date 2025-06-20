@@ -29,9 +29,14 @@
     <button type="submit">Submit</button>
   </form>
 
+  <h3> Stored Survey Response:</h3>
+  <div id="displaySurvey"></div>
+
   <script>
     const form = document.getElementById('surveyForm');
+    const display = document.getElementById('displaySurvey');
 
+    // Load saved survey from sessionStorage
     window.onload = () => {
       const saved = JSON.parse(sessionStorage.getItem('lindtSurvey'));
       if (saved) {
@@ -41,9 +46,18 @@
           const recommendRadio = form.querySelector(`input[name="recommend"][value="${saved.recommend}"]`);
           if (recommendRadio) recommendRadio.checked = true;
         }
+
+        display.innerHTML = `
+          <p><strong>Frequency:</strong> ${saved.frequency}</p>
+          <p><strong>Favorite:</strong> ${saved.favorite}</p>
+          <p><strong>Recommend:</strong> ${saved.recommend}</p>
+        `;
+      } else {
+        display.innerText = "No survey data found.";
       }
     };
 
+    // Save and display data on submit
     form.onsubmit = function(e) {
       e.preventDefault();
 
@@ -54,8 +68,37 @@
       };
 
       sessionStorage.setItem('lindtSurvey', JSON.stringify(surveyData));
+
+      display.innerHTML = `
+        <p><strong>Frequency:</strong> ${surveyData.frequency}</p>
+        <p><strong>Favorite:</strong> ${surveyData.favorite}</p>
+        <p><strong>Recommend:</strong> ${surveyData.recommend}</p>
+      `;
+
       alert("Thank you! Your response has been saved.");
     };
+  </script>
+
+  <!-- Optional last visited page logic -->
+  <script>
+    const currentURL = window.location.href;
+    const lastVisited = localStorage.getItem("lastURL");
+
+    window.addEventListener("DOMContentLoaded", () => {
+      const currentSpan = document.getElementById("currentUrl");
+      if (currentSpan) currentSpan.innerText = currentURL;
+
+      const lastSpan = document.getElementById("lastPage");
+      if (lastSpan) {
+        if (lastVisited && lastVisited !== currentURL) {
+          lastSpan.innerText = " Last visited: " + lastVisited;
+        } else {
+          lastSpan.innerText = "Welcome! This is your first visit.";
+        }
+      }
+    });
+
+    localStorage.setItem("lastURL", currentURL);
   </script>
 
 </body>

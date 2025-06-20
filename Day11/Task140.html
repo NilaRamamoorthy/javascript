@@ -35,6 +35,30 @@
       }
     }
   </script>
+<script>
+  const currentURL = window.location.href;
+  const lastVisited = localStorage.getItem("lastURL");
+
+  // Display current and last visited URLs
+  window.addEventListener("DOMContentLoaded", () => {
+    // Show current URL (optional)
+    const currentSpan = document.getElementById("currentUrl");
+    if (currentSpan) currentSpan.innerText = currentURL;
+
+    // Show last visited URL
+    const lastSpan = document.getElementById("lastPage");
+    if (lastSpan) {
+      if (lastVisited && lastVisited !== currentURL) {
+        lastSpan.innerText = " Last visited: " + lastVisited;
+      } else {
+        lastSpan.innerText = "Welcome! This is your first visit.";
+      }
+    }
+  });
+
+  // Save this page as last visited
+  localStorage.setItem("lastURL", currentURL);
+</script>
 
 </body>
 </html>

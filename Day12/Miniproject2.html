@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        table,
+        th,
+        td {
+            border: 1px solid black;
+            border-collapse: collapse;
+            padding: 8px;
+            margin: 10px auto;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Search Book -->
+    <div>
+        <h1>Library Book Management System </h1>
+        <label>Search Book By:</label>
+        <input type="text" id="title" placeholder="title/author/genre">
+        <button onclick="search()">Search</button>
+        <p id="displaySearch"></p>
+    </div>
+    <!-- Borrow or Return Book -->
+    <div>
+        <h3> Borrow / Return Book</h3>
+        <input type="number" id="borrowBookId" placeholder="Book ID">
+        <input type="text" id="borrowerName" placeholder="Borrower Name">
+        <button onclick="borrowBook()">Borrow</button>
+        <button onclick="returnBook()">Return</button>
+    </div>
+
+    <!-- View Available Books -->
+    <div>
+        <h3>Available Books</h3>
+        <button onclick="listAvailableBooks()">View Available Books</button>
+        <div id="availableBooks"></div>
+    </div>
+    <script>
+        let library = [
+            { id: 101, title: "The Alchemist", author: "Paulo Coelho", genre: "Fiction", available: true, borrower: null },
+            { id: 102, title: "Clean Code", author: "Robert C. Martin", genre: "Programming", available: true, borrower: null },
+            { id: 103, title: "1984", author: "George Orwell", genre: "Dystopian", available: false, borrower: "John Doe" },
+            { id: 104, title: "Sapiens", author: "Yuval Noah Harari", genre: "History", available: true, borrower: null },
+            { id: 105, title: "To Kill a Mockingbird", author: "Harper Lee", genre: "Classic", available: true, borrower: null },
+            { id: 106, title: "Atomic Habits", author: "James Clear", genre: "Self-help", available: false, borrower: "John Doe" }
+        ];
+        function search() {
+            const title = document.getElementById("title").value.trim();
+            const result = library.find(book => book.title.toLowerCase() == title.toLowerCase() || book.genre.toLowerCase() == title.toLowerCase() || book.author.toLowerCase() == title.toLowerCase())
+            console.log(result);
+            const displaySearch = document.getElementById("displaySearch")
+            let available = true;
+            if (result.available) {
+                available = "Available"
+            }
+            else {
+                available = "Unavailable"
+            }
+            displaySearch.innerText = `Id:${result.id}| Title:${result.title}| Author:${result.author}| Genre:${result.genre}| Availability:${available}| Borrower:${result.borrower}`
+
+        }
+        function borrowBook() {
+            const id = parseInt(document.getElementById("borrowBookId").value);
+            const name = document.getElementById("borrowerName").value.trim();
+            const book = library.find(b => b.id === id);
+
+            if (!book) {
+                alert("Book not found.");
+            } else if (!book.available) {
+                alert("Book is already borrowed by " + book.borrower);
+            } else {
+                book.available = false;
+                book.borrower = name || "Unknown";
+                alert(`Book "${book.title}" borrowed by ${book.borrower}`);
+            }
+
+            clearInputs();
+            listAvailableBooks();
+            window.location.reload();
+        }
+
+        function returnBook() {
+            const id = parseInt(document.getElementById("borrowBookId").value);
+            const book = library.find(b => b.id === id);
+
+            if (!book) {
+                alert("Book not found.");
+            } else if (book.available) {
+                alert("Book is not currently borrowed.");
+            } else {
+                book.available = true;
+                book.borrower = null;
+                console.log(book);
+
+                alert(`Book "${book.title}" has been returned.`);
+            }
+
+            clearInputs();
+            listAvailableBooks();
+
+        }
+        function listAvailableBooks() {
+            const available = library.filter(book => book.available);
+            displayBooks(available, "availableBooks");
+        }
+
+        function displayBooks(bookArray, containerId) {
+            const container = document.getElementById(containerId);
+            if (bookArray.length === 0) {
+                container.innerHTML = "<p>No books found.</p>";
+                return;
+            }
+
+            let html = `<table>
+    <tr><th>ID</th><th>Title</th><th>Author</th><th>Genre</th><th>Status</th><th>Borrower</th></tr>`;
+
+            bookArray.forEach(book => {
+                const statusText = book.available ? "Available" : "Unavailable";
+                const borrowerText = book.available ? "-" : (book.borrower || "John Doe");
+
+                html += `<tr>
+      <td>${book.id}</td>
+      <td>${book.title}</td>
+      <td>${book.author}</td>
+      <td>${book.genre}</td>
+      <td>${statusText}</td>
+      <td>${borrowerText}</td>
+    </tr>`;
+            });
+
+            html += `</table>`;
+            container.innerHTML = html;
+        }
+
+
+
+        window.onload = listAvailableBooks;
+    </script>
+</body>
+
+</html>

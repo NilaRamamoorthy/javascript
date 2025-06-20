@@ -2,95 +2,109 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Simple Stopwatch</title>
+  <title>Stopwatch with SessionStorage</title>
   <style>
     body {
-      font-family: sans-serif;
       text-align: center;
-      padding-top: 100px;
-      background: #f0f0f0;
+      padding: 50px;
     }
-    #display {
+    h1 {
       font-size: 48px;
-      margin-bottom: 20px;
     }
     button {
-      font-size: 16px;
-      padding: 8px 16px;
-      margin: 5px;
+      font-size: 18px;
+      margin: 10px;
+      padding: 10px 20px;
     }
   </style>
 </head>
 <body>
 
-  <h2>Stopwatch</h2>
-  <div id="display">00:00:00</div>
-  <button id="startBtn">Start</button>
-  <button id="stopBtn">Stop</button>
-  <button id="resetBtn">Reset</button>
+  <h2>Stopwatch with SessionStorage</h2>
+  <h1 id="display">00:00:00</h1>
+  <button onclick="startTimer()">Start</button>
+  <button onclick="stopTimer()">Stop</button>
+  <button onclick="resetTimer()">Reset</button>
 
   <script>
     let startTime;
-    let elapsedTime = 0;
-    let timerInterval;
+    let elapsed = 0;
+    let interval;
 
-    function format(ms) {
-      let sec = Math.floor(ms / 1000);
-      let h = String(Math.floor(sec / 3600)).padStart(2, '0');
-      let m = String(Math.floor((sec % 3600) / 60)).padStart(2, '0');
-      let s = String(sec % 60).padStart(2, '0');
-      return `${h}:${m}:${s}`;
-    }
-
-    function updateDisplay() {
-      let current = Date.now();
-      let diff = current - startTime + elapsedTime;
-      document.getElementById('display').textContent = format(diff);
-    }
-
-    function start() {
-      if (!timerInterval) {
-        startTime = Date.now();
-        sessionStorage.setItem('startTime', startTime);
-        timerInterval = setInterval(updateDisplay, 1000);
+    // Load from sessionStorage if exists
+    if (sessionStorage.getItem("startTime")) {
+      startTime = parseInt(sessionStorage.getItem("startTime"));
+      if (sessionStorage.getItem("running") === "true") {
+        startTimer();
+      } else {
+        elapsed = parseInt(sessionStorage.getItem("elapsed")) || 0;
+        updateDisplay(elapsed);
       }
     }
 
-    function stop() {
-      if (timerInterval) {
-        clearInterval(timerInterval);
-        elapsedTime += Date.now() - startTime;
-        sessionStorage.setItem('elapsedTime', elapsedTime);
-        sessionStorage.removeItem('startTime');
-        timerInterval = null;
+    function startTimer() {
+      if (!interval) {
+        if (!startTime) {
+          startTime = Date.now() - elapsed;
+        }
+        sessionStorage.setItem("startTime", startTime);
+        sessionStorage.setItem("running", "true");
+
+        interval = setInterval(() => {
+          elapsed = Date.now() - startTime;
+          sessionStorage.setItem("elapsed", elapsed);
+          updateDisplay(elapsed);
+        }, 1000);
       }
     }
 
-    function reset() {
-      clearInterval(timerInterval);
-      timerInterval = null;
-      elapsedTime = 0;
-      document.getElementById('display').textContent = '00:00:00';
+    function stopTimer() {
+      clearInterval(interval);
+      interval = null;
+      sessionStorage.setItem("elapsed", elapsed);
+      sessionStorage.setItem("running", "false");
+    }
+
+    function resetTimer() {
+      stopTimer();
+      elapsed = 0;
+      startTime = null;
+      updateDisplay(0);
       sessionStorage.clear();
     }
 
-    window.onload = () => {
-      let storedStart = sessionStorage.getItem('startTime');
-      let storedElapsed = parseInt(sessionStorage.getItem('elapsedTime')) || 0;
-      elapsedTime = storedElapsed;
-
-      if (storedStart) {
-        startTime = parseInt(storedStart);
-        timerInterval = setInterval(updateDisplay, 1000);
-      } else {
-        document.getElementById('display').textContent = format(elapsedTime);
-      }
-    };
-
-    document.getElementById('startBtn').onclick = start;
-    document.getElementById('stopBtn').onclick = stop;
-    document.getElementById('resetBtn').onclick = reset;
+    function updateDisplay(ms) {
+      const totalSeconds = Math.floor(ms / 1000);
+      const hours = String(Math.floor(totalSeconds / 3600)).padStart(2, '0');
+      const minutes = String(Math.floor((totalSeconds % 3600) / 60)).padStart(2, '0');
+      const seconds = String(totalSeconds % 60).padStart(2, '0');
+      document.getElementById("display").innerText = `${hours}:${minutes}:${seconds}`;
+    }
   </script>
+<script>
+  const currentURL = window.location.href;
+  const lastVisited = localStorage.getItem("lastURL");
+
+  // Display current and last visited URLs
+  window.addEventListener("DOMContentLoaded", () => {
+    // Show current URL (optional)
+    const currentSpan = document.getElementById("currentUrl");
+    if (currentSpan) currentSpan.innerText = currentURL;
+
+    // Show last visited URL
+    const lastSpan = document.getElementById("lastPage");
+    if (lastSpan) {
+      if (lastVisited && lastVisited !== currentURL) {
+        lastSpan.innerText = "Last visited: " + lastVisited;
+      } else {
+        lastSpan.innerText = "Welcome! This is your first visit.";
+      }
+    }
+  });
+
+  // Save this page as last visited
+  localStorage.setItem("lastURL", currentURL);
+</script>
 
 </body>
 </html>

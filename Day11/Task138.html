@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Click Counter</title>
+  <style>
+    body {
+      text-align: center;
+      padding-top: 50px;
+    }
+    
+  </style>
+</head>
+<body>
+
+  <h2> Click Counter (with LocalStorage)</h2>
+  <button onclick="increment()">Click Me!</button>
+  <p>Click Count: <span id="counter">0</span></p>
+  <button onclick="reset()">Reset</button>
+
+  <script>
+    
+    let count = localStorage.getItem("clickCount") || 0;
+    document.getElementById("counter").innerText = count;
+
+    function increment() {
+      count++;
+      localStorage.setItem("clickCount", count);
+      document.getElementById("counter").innerText = count;
+    }
+
+    function reset() {
+      count = 0;
+      localStorage.setItem("clickCount", count);
+      document.getElementById("counter").innerText = count;
+    }
+  </script>
+
+</body>
+</html>

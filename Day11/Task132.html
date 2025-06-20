@@ -26,7 +26,7 @@
         <input type="name" id="name" placeholder="Enter your name">
         <button onclick="save()">Save</button>
     </div>
-    <button id="retrieve" onclick="retrieve()">click to Retrieve</button>
+  
     <h4 id="display"></h4>
     <script>
         function save() {
@@ -34,6 +34,7 @@
             localStorage.setItem("username", name)
             console.log(name);
             document.getElementById("input").style.display = "none";
+            retrieve();
         }
         function retrieve() {
             const storedName = localStorage.getItem("username")
@@ -41,6 +42,31 @@
             document.getElementById("display").innerText = `Hi ${storedName}... Welcome to the page!`
         }
     </script>
+    <script>
+  const currentURL = window.location.href;
+  const lastVisited = localStorage.getItem("lastURL");
+
+  // Display current and last visited URLs
+  window.addEventListener("DOMContentLoaded", () => {
+    // Show current URL (optional)
+    const currentSpan = document.getElementById("currentUrl");
+    if (currentSpan) currentSpan.innerText = currentURL;
+
+    // Show last visited URL
+    const lastSpan = document.getElementById("lastPage");
+    if (lastSpan) {
+      if (lastVisited && lastVisited !== currentURL) {
+        lastSpan.innerText = "Last visited: " + lastVisited;
+      } else {
+        lastSpan.innerText = "Welcome! This is your first visit.";
+      }
+    }
+  });
+
+  // Save this page as last visited
+  localStorage.setItem("lastURL", currentURL);
+</script>
+
 </body>
 
 </html>

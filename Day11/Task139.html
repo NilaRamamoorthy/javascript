@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>To-Do List with LocalStorage</title>
+  <style>
+    body {
+      font-family: Arial;
+      text-align: center;
+      margin-top: 50px;
+    }
+    input {
+      padding: 10px;
+      width: 250px;
+    }
+    button {
+      padding: 10px;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+    li {
+      padding: 8px;
+      margin: 5px auto;
+      width: 300px;
+      background: #f0f0f0;
+      display: flex;
+      justify-content: space-between;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>To-Do List (with LocalStorage)</h2>
+
+  <input type="text" id="todoInput" placeholder="Enter a task">
+  <button onclick="addTodo()">Add</button>
+
+  <ul id="todoList"></ul>
+
+  <script>
+    let todos = [];
+
+    // Load from localStorage when page loads
+    window.onload = function () {
+      const stored = localStorage.getItem("todos");
+      if (stored) {
+        todos = JSON.parse(stored);
+        renderTodos();
+      }
+    };
+
+    function addTodo() {
+      const input = document.getElementById("todoInput");
+      const task = input.value.trim();
+      if (task === "") return;
+
+      todos.push(task);
+      localStorage.setItem("todos", JSON.stringify(todos));
+      input.value = "";
+      renderTodos();
+    }
+
+    function removeTodo(index) {
+      todos.splice(index, 1);
+      localStorage.setItem("todos", JSON.stringify(todos));
+      renderTodos();
+    }
+
+    function renderTodos() {
+      const list = document.getElementById("todoList");
+      list.innerHTML = "";
+
+      todos.forEach((item, index) => {
+        const li = document.createElement("li");
+        li.innerHTML = `
+          <span>${item}</span>
+          <button onclick="removeTodo(${index})">delete</button>
+        `;
+        list.appendChild(li);
+      });
+    }
+  </script>
+
+</body>
+</html>

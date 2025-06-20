@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Current Page</title>
+</head>
+<body>
+  <h2>You are on: <span id="currentUrl"></span></h2>
+  <p id="lastPage"></p>
+
+  <script>
+    const currentURL = window.location.href;
+    const lastVisited = localStorage.getItem("lastURL");
+
+    // Display current and last visited URLs
+    document.getElementById("currentUrl").innerText = currentURL;
+
+    if (lastVisited && lastVisited !== currentURL) {
+      document.getElementById("lastPage").innerText = " Last visited: " + lastVisited;
+    } else {
+      document.getElementById("lastPage").innerText = "Welcome! This is your first visit.";
+    }
+
+    // Store current URL as last visited
+    localStorage.setItem("lastURL", currentURL);
+  </script>
+</body>
+</html>

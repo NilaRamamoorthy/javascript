@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            text-align: center;
+            margin-top: 5%;
+        }
+
+        table,
+        th,
+        td {
+            border: 1px solid black;
+            border-collapse: collapse;
+            padding: 5px;
+        }
+
+        .dTable {
+            margin-top: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+
+<body>
+    <label>Check Stock Availability</label><br>
+    <input id="stock" placeholder="ID or Product name">
+    <button onclick="checkStock()">Check</button>
+    <p id="displayProducts"></p>
+    <label>Update Inventory</label>
+    <input type="name" id="updateProduct" placeholder="Id or Name">
+    <input type="number" id="updateQuantity" placeholder="">
+    <button onclick="UpdateInventory()">Update</button><br><br>
+    <button onclick="viewInventory()">view Inventory</button>
+    <button onclick="total()">Total Worth</button>
+    <p id="totalValue"></p>
+    <div class="dTable">
+        <table id="displayInventory"></table>
+    </div>
+    <script>
+        let inventory = [{
+            id: 101,
+            name: 'Moisturizer',
+            category: 'skincare',
+            quantity: 30,
+            price: 450
+        },
+        {
+            id: 102,
+            name: 'lipstick',
+            category: 'makeup',
+            quantity: 70,
+            price: 580
+        },
+        {
+            id: 103,
+            name: 'serum',
+            category: 'skincare',
+            quantity: 65,
+            price: 750
+        },
+        {
+            id: 104,
+            name: 'foundation',
+            category: 'makeup',
+            quantity: 43,
+            price: 990
+        },
+        {
+            id: 105,
+            name: 'lipbalm',
+            category: 'skincare',
+            quantity: 86,
+            price: 399
+        }]
+        //Check Stock
+        function checkStock() {
+            const stock = document.getElementById("stock").value.trim();
+            const stockId = parseInt(stock)
+            const availability = inventory.find(product => product.id === stockId || product.name.toLowerCase() === stock.toLowerCase())
+            console.log(availability);
+            const display = document.getElementById("displayProducts")
+            if (availability) {
+                display.innerText = `Product Found: 
+        Id:${availability.id}|  name:${availability.name}| quantity:${availability.quantity} `
+            }
+            else {
+                display.innerText = `Product not Found`
+            }
+        }
+        //UpdateInventory
+        function UpdateInventory() {
+            const updateProduct = document.getElementById("updateProduct").value.trim();
+            const updateProductId = parseInt(updateProduct)
+            const updateQuantity = document.getElementById("updateQuantity").value.trim();
+            quant = parseInt(updateQuantity)
+            const availability = inventory.find(product => product.id === updateProductId || product.name.toLowerCase() === updateProduct.toLowerCase())
+            availability.quantity = availability.quantity + quant;
+            console.log(availability);
+            viewInventory();
+            alert(`${availability.name} quantity is updated to ${availability.quantity}`)
+
+        }
+        function viewInventory() {
+            const table = document.getElementById("displayInventory")
+            table.innerHTML = `
+            <tr>
+              <th>ID</th><th>Name</th><th>Category</th><th>Quantity</th><th>Price (₹)</th>
+            </tr>
+          `;
+            inventory.forEach(item => {
+                table.innerHTML += `
+              <tr>
+                <td>${item.id}</td>
+                <td>${item.name}</td>
+                <td>${item.category}</td>
+                <td>${item.quantity}</td>
+                <td>${item.price}</td>
+              </tr>
+            `;
+            });
+        }
+        //Calculate Total
+        function total() {
+            const total = inventory.reduce((sum, item) => sum + (item.quantity * item.price), 0);
+            document.getElementById('totalValue').innerText = `The total Inventory Value is ₹${total}`;
+        }
+        
+    </script>
+</body>
+
+</html>

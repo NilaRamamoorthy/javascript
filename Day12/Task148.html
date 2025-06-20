@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Task148</h1>
+    <p>Filter an array to show only students with grade 'A'. </p>
+    <p>Check console</p>
+    <script>
+        const students = [
+  { name: "Alice", grade: "A" },
+  { name: "John", grade: "B" },
+  { name: "Danny", grade: "A" },
+  { name: "Flora", grade: "A" },
+  { name: "Ciara", grade: "A" },
+  { name: "Taylor", grade: "F" }
+];
+const gradeAStudents = students.filter(student => student.grade === "A");
+
+console.log(gradeAStudents);
+
+    </script>
+</body>
+</html>

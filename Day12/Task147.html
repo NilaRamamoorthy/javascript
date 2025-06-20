@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Task147</h1>
+    <p>Sort an array of objects by age in ascending order.</p>
+   <p id="display"></p>
+   <button onclick="output()">Click for output</button>
+    <p id="output"></p>
+    <script>
+        const employees = [
+            {
+                name: 'Ajay',
+                age: 34,
+                position: 'Project Manager'
+
+            },
+            {
+                name: 'Zara',
+                age: 36,
+                position: 'Python Developer'
+            },
+            {
+                name: 'Maxine',
+                age: 27,
+                position: 'Junior Python Developer'
+            },
+            {
+                name: 'Alan',
+                age: 35,
+                position: 'UX/UI Developer'
+            },
+        ]
+  document.getElementById("display").textContent = JSON.stringify(employees, null, 2);
+function output(){
+employees.sort((a, b) => a.age - b.age);
+        console.log(employees);
+          document.getElementById("output").textContent = JSON.stringify(employees, null, 2);
+}
+        
+
+    </script>
+</body>
+
+</html>

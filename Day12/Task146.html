@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Product List</title>
+  <style>
+    body {
+      text-align: center;
+      margin: 20px;
+    }
+    .product {
+      border: 1px solid #ccc;
+      padding: 15px;
+      margin: 10px auto;
+      max-width: 400px;
+    }
+    img {
+      width: 100px;
+    }
+  </style>
+</head>
+<body>
+
+  <h2> Product List from API</h2>
+  <button onclick="loadProducts()">Load Products</button>
+  <div id="productList"></div>
+
+  <script>
+    function loadProducts() {
+      fetch('https://fakestoreapi.com/products')
+        .then(response => response.json())
+        .then(data => {
+          const container = document.getElementById('productList');
+          container.innerHTML = "";
+          data.forEach(product => {
+            container.innerHTML += `
+              <div class="product">
+                <h4>${product.title}</h4>
+                <img src="${product.image}" alt="${product.title}">
+                <p>Price: ₹${product.price}</p>
+                <p><strong>Category:</strong> ${product.category}</p>
+              </div>
+            `;
+          });
+        })
+        .catch(error => {
+          document.getElementById('productList').innerText = "Error fetching products.";
+          console.error(error);
+        });
+    }
+  </script>
+
+</body>
+</html>

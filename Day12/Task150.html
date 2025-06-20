@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+      <h1>Task150</h1>
+    <p>Convert an array of objects to only an array of names. </p>
+    <script>
+          const products = [
+            { name: "Sunscreen", price: 1200 },
+            { name: "Nail Polish", price: 800 },
+            { name: "Eyebrow pencil", price: 1200 },
+            { name: "Moisturizer", price: 1500 },
+            { name: "Serum", price: 500 }
+        ];
+       
+        //Array Of Names
+        const names = products.map(user => user.name);
+        console.log(names);
+    </script>
+</body>
+</html>

@@ -2,55 +2,90 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <style>
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+  <meta charset="UTF-8">
+  <title>SessionStorage Login Status</title>
+  <style>
+    body {
+      text-align: center;
+      margin-top: 50px;
+    }
 
-        form {
-            width: 20%;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-        label{
-           
-        }
-    </style>
+    #logoutBtn {
+      display: none;
+    }
+  </style>
 </head>
 
 <body>
-    <form id="login">
-        <label>User Name:</label>
-        <input type="name" id="username" placeholder="Enter Name">
-        <label>Password</label>
-        <input type="password" id="password" placeholder="Password">
-        <button onclick="login()">Login</button>
-    </form>
-    <div id="welcome" style="display: none;">
-        <p id="greeting"></p>
-        <button onclick="logout()">Logout</button>
-      </div>
-      <script>
-        function login(){
-            let username=document.getElementById("username").value.trim();
-            let passwd=document.getElementById("password").value.trim();
-            localStorage.setItem("UserName",username)
-            localStorage.setItem("Password",passwd)
-            document.getElementById("welcome").style.display="block";
-            document.getElementById("greeting").innerText=`Hi ${username}! Have a Great Day`;
 
-        }
-        function logout() {
-            
-            
-        }
-      </script>
+  <h2>Session Login</h2>
+
+  <div id="loginForm">
+    <input type="text" id="username" placeholder="Enter username">
+    <button onclick="login()">Login</button>
+  </div>
+
+  <div id="welcomeMessage" style="display: none;">
+    <h3>Welcome, <span id="userDisplay"></span>!</h3>
+    <button id="logoutBtn" onclick="logout()">Logout</button>
+  </div>
+
+  <script>
+    // Check sessionStorage on page load
+    window.onload = function () {
+      const user = sessionStorage.getItem("username");
+      if (user) {
+        showWelcome(user);
+      }
+    };
+
+    function login() {
+      const name = document.getElementById("username").value.trim();
+      if (name) {
+        sessionStorage.setItem("username", name);
+        showWelcome(name);
+      } else {
+        alert("Please enter a username.");
+      }
+    }
+
+    function showWelcome(name) {
+      document.getElementById("loginForm").style.display = "none";
+      document.getElementById("welcomeMessage").style.display = "block";
+      document.getElementById("userDisplay").innerText = name;
+      document.getElementById("logoutBtn").style.display = "inline-block";
+    }
+
+    function logout() {
+      sessionStorage.removeItem("username");
+      location.reload();
+    }
+  </script>
+<script>
+  const currentURL = window.location.href;
+  const lastVisited = localStorage.getItem("lastURL");
+
+  // Display current and last visited URLs
+  window.addEventListener("DOMContentLoaded", () => {
+    // Show current URL (optional)
+    const currentSpan = document.getElementById("currentUrl");
+    if (currentSpan) currentSpan.innerText = currentURL;
+
+    // Show last visited URL
+    const lastSpan = document.getElementById("lastPage");
+    if (lastSpan) {
+      if (lastVisited && lastVisited !== currentURL) {
+        lastSpan.innerText = "Last visited: " + lastVisited;
+      } else {
+        lastSpan.innerText = "Welcome! This is your first visit.";
+      }
+    }
+  });
+
+  // Save this page as last visited
+  localStorage.setItem("lastURL", currentURL);
+</script>
+
 </body>
 
 </html>
