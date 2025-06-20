@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Mini Chat App</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 500px;
+      margin: 30px auto;
+    }
+
+    #chatBox {
+      border: 1px solid #ccc;
+      height: 300px;
+      overflow-y: auto;
+      padding: 10px;
+      background: #f9f9f9;
+      margin-bottom: 10px;
+    }
+
+    .message {
+      margin: 5px 0;
+      padding: 8px;
+      border-radius: 5px;
+    }
+
+    .sent {
+      background: #d1e7dd;
+      text-align: right;
+    }
+
+    .received {
+      background: #f8d7da;
+      text-align: left;
+    }
+
+    .timestamp {
+      font-size: 10px;
+      color: gray;
+      display: block;
+      margin-top: 3px;
+    }
+
+    #msgInput {
+      width: 100%;
+      padding: 10px;
+      font-size: 14px;
+    }
+
+    button {
+      padding: 10px 15px;
+      margin-top: 5px;
+      font-size: 14px;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+
+<h2>💬 Chat Application</h2>
+
+<div id="chatBox"></div>
+
+<input type="text" id="msgInput" placeholder="Type your message..." />
+<button onclick="sendMessage()">Send</button>
+
+<script>
+  const chatBox = document.getElementById("chatBox");
+  const msgInput = document.getElementById("msgInput");
+
+  // Load messages from localStorage on page load
+  window.onload = function () {
+    const messages = JSON.parse(localStorage.getItem("chatMessages")) || [];
+    messages.forEach(showMessage);
+  };
+
+  function sendMessage() {
+    const text = msgInput.value.trim();
+    if (!text) return;
+
+    const msgObj = {
+      type: "sent",
+      text: text,
+      time: new Date().toLocaleTimeString()
+    };
+
+    storeMessage(msgObj);
+    showMessage(msgObj);
+
+    // Simulate a received reply after 1 second
+    setTimeout(() => {
+      const reply = {
+        type: "received",
+        text: "Auto-reply: " + text,
+        time: new Date().toLocaleTimeString()
+      };
+      storeMessage(reply);
+      showMessage(reply);
+    }, 1000);
+
+    msgInput.value = "";
+  }
+
+  function showMessage(msg) {
+    const msgDiv = document.createElement("div");
+    msgDiv.className = "message " + msg.type;
+    msgDiv.innerHTML = `${msg.text}<span class="timestamp">${msg.time}</span>`;
+    chatBox.appendChild(msgDiv);
+    chatBox.scrollTop = chatBox.scrollHeight;
+  }
+
+  function storeMessage(msg) {
+    const messages = JSON.parse(localStorage.getItem("chatMessages")) || [];
+    messages.push(msg);
+    localStorage.setItem("chatMessages", JSON.stringify(messages));
+  }
+</script>
+
+</body>
+</html>

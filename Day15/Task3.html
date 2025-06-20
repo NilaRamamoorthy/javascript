@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <p>Division by Zero example</p>
+    <p id="output"></p>
+    <script>
+        const output = document.getElementById("output")
+        function add(num1, num2) {
+            try {
+                if (num2 == 0) {
+                    throw new Error("Cannot divide by zero");
+                }
+                return num1 / num2;
+            } catch (error) {
+                return "Error: " + error.message;
+            }
+        }
+        const result = add(3, 0)
+        output.innerText = result
+    </script>
+</body>
+
+</html>

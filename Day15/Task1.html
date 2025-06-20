@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Syntax Error Catch Example</title>
+</head>
+<body>
+
+<h2>Syntax Error Handling with try...catch</h2>
+<p id="output"></p>
+
+<script>
+  const output = document.getElementById("output");
+
+  try {
+ 
+    eval("cons b=30");
+  } catch (error) {
+    if (error instanceof SyntaxError) {
+      output.textContent = "Caught SyntaxError: " + error.message;
+      output.style.color = "red";
+    } else {
+      output.textContent = "Caught error: " + error.message;
+      output.style.color = "orange";
+    }
+  }
+</script>
+
+</body>
+</html>

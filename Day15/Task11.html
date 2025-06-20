@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Try-Catch-Finally</title>
+</head>
+<body>
+
+<h2>Enter a number to double it</h2>
+<input type="text" id="userInput" placeholder="Enter a number" />
+<button onclick="processInput()">Submit</button>
+<p id="output"></p>
+
+<script>
+  function processInput() {
+    const input = document.getElementById("userInput");
+    const output = document.getElementById("output");
+    const value = input.value;
+
+    try {
+      const number = parseFloat(value);
+
+      if (isNaN(number)) {
+        throw new Error("Please enter a valid number.");
+      }
+
+      const doubled = number * 2;
+      output.textContent = `Doubled value: ${doubled}`;
+      output.style.color = "green";
+
+    } catch (error) {
+      output.textContent = "Error: " + error.message;
+      output.style.color = "red";
+
+    } finally {
+      console.log("Cleaning up...");
+      input.value = ""; 
+    }
+  }
+</script>
+
+</body>
+</html>

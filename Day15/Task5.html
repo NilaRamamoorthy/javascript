@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>TypeError Example</title>
+</head>
+<body>
+
+<h2>Check if Input is a Number</h2>
+
+<input type="text" id="numberInput" placeholder="Enter a number">
+<button onclick="checkNumber()">Check</button>
+<p id="output"></p>
+
+<script>
+  // Function to check if input is a number
+  function checkIfNumber(input) {
+    const value = Number(input);
+
+    if (isNaN(value)) {
+      throw new Error("Input must be a valid number.");
+    }
+
+    return `Valid number: ${value}`;
+  }
+
+
+  function checkNumber() {
+    const userInput = document.getElementById("numberInput").value;
+    const output = document.getElementById("output");
+
+    try {
+      const result = checkIfNumber(userInput);
+      output.textContent = result;
+      output.style.color = "green";
+    } catch (error) {
+     output.textContent = `Caught error: ${error.name} - ${error.message}`;
+      output.style.color = "red";
+    }
+  }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Multi-Song Music Player</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 40px;
+    }
+    .player {
+      border: 1px solid #ccc;
+      padding: 20px;
+      border-radius: 12px;
+      max-width: 500px;
+      margin: auto;
+      background: #f9f9f9;
+    }
+    select, button, input[type="range"] {
+      width: 100%;
+      margin: 8px 0;
+      padding: 10px;
+      font-size: 16px;
+    }
+    .time {
+      margin: 5px 0;
+      font-size: 14px;
+    }
+    #songInfo {
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="player">
+  <h2>🎵 Music Player</h2>
+
+  <label for="songSelect">Choose a song:</label>
+ <select id="songSelect" onchange="loadSelectedSong()">
+  <option value="1">Boomi Enna Suthudhe</option>
+  <option value="2">Dheema</option>
+  <option value="3">Enna Vilai Azhage</option>
+  <option value="4">Hey Minnale</option>
+  <option value="5">Kangal Edho</option>
+  <option value="6">Nangurama Irukura</option>
+  <option value="7">Porkanda Singam</option>
+  <option value="8">Theme Of 3</option>
+  <option value="9">Urulaikilangu Chellakutty</option>
+  <option value="10">Vennilavu Saaral Nee</option>
+</select>
+
+
+  <div id="songInfo">Loading song...</div>
+  <audio id="audio" controls style="display: none;"></audio>
+
+  <div class="time" id="timeDisplay">00:00 / 00:00</div>
+  <input type="range" id="seekBar" value="0" min="0" step="1" onchange="seekAudio(this.value)" />
+
+  <button onclick="playSong()">▶️ Play</button>
+  <button onclick="pauseSong()">⏸ Pause</button>
+  <button onclick="stopSong()">⏹ Stop</button>
+
+  <label for="volume">🔊 Volume:</label>
+  <input type="range" id="volume" min="0" max="1" step="0.01" onchange="changeVolume(this.value)">
+</div>
+
+<script>
+  const audio = document.getElementById("audio");
+  const songInfo = document.getElementById("songInfo");
+  const timeDisplay = document.getElementById("timeDisplay");
+  const seekBar = document.getElementById("seekBar");
+
+  const songUrls = {
+    1: "./asserts/music/Boomi Enna Suthudhe - Masstamilan.mp3",
+    2: "./asserts/music/Dheema - Masstamilan.mp3",
+    3: "./asserts/music/Enna Vilai Azhage - Masstamilan.mp3",
+    4: "./asserts/music/Hey Minnale - Masstamilan.mp3",
+    5: "./asserts/music/Kangal Edho - Masstamilan.mp3",
+    6: "./asserts/music/Nangurama Irukura - Masstamilan.mp3",
+    7: "./asserts/music/Porkanda Singam - Masstamilan.mp3",
+    8: "./asserts/music/Theme Of 3 - Masstamilan.mp3",
+    9: "./asserts/music/Urulaikilangu Chella Kutty - Masstamilan.mp3",
+    10: "./asserts/music/Vennilavu Saaral - Masstamilan.mp3"
+  };
+
+ function loadSelectedSong() {
+  const select = document.getElementById("songSelect");
+  const songNumber = select.value;
+  const songName = select.options[select.selectedIndex].text;
+  const url = songUrls[songNumber];
+
+  audio.src = url;
+  songInfo.textContent = `🎵 Now Playing: ${songName}`;
+  audio.load();
+  audio.play();
+}
+
+
+  audio.onloadedmetadata = () => {
+    seekBar.max = Math.floor(audio.duration);
+    updateTimeDisplay();
+  };
+
+  audio.ontimeupdate = () => {
+    seekBar.value = Math.floor(audio.currentTime);
+    updateTimeDisplay();
+  };
+
+  function playSong() {
+    audio.play();
+  }
+
+  function pauseSong() {
+    audio.pause();
+  }
+
+  function stopSong() {
+    audio.pause();
+    audio.currentTime = 0;
+  }
+
+  function changeVolume(val) {
+    audio.volume = val;
+  }
+
+  function seekAudio(val) {
+    audio.currentTime = val;
+  }
+
+  function formatTime(seconds) {
+    const min = Math.floor(seconds / 60);
+    const sec = Math.floor(seconds % 60).toString().padStart(2, '0');
+    return `${min}:${sec}`;
+  }
+
+  function updateTimeDisplay() {
+    const current = formatTime(audio.currentTime);
+    const total = formatTime(audio.duration);
+    timeDisplay.textContent = `${current} / ${total}`;
+  }
+
+  // Initial load
+  window.onload = () => {
+    document.getElementById("songSelect").value = "1";
+    loadSelectedSong();
+    audio.volume = 0.5;
+  };
+</script>
+
+</body>
+</html>

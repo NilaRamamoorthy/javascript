@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>User Registration Form</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 400px;
+      margin: 40px auto;
+    }
+    input {
+      display: block;
+      width: 100%;
+      margin-bottom: 8px;
+      padding: 8px;
+      font-size: 14px;
+    }
+    .error {
+      color: red;
+      font-size: 13px;
+      margin-bottom: 10px;
+    }
+    .success {
+      color: green;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+<h2>User Registration</h2>
+
+<form onsubmit="return handleSubmit(event)">
+  <input type="text" id="name" placeholder="Name" />
+  <div class="error" id="nameError"></div>
+
+  <input type="email" id="email" placeholder="Email" />
+  <div class="error" id="emailError"></div>
+
+  <input type="password" id="password" placeholder="Password" />
+  <div class="error" id="passwordError"></div>
+
+  <button type="submit">Register</button>
+</form>
+
+<p id="result" class="success"></p>
+
+<script>
+  function handleSubmit(event) {
+    event.preventDefault(); 
+
+    document.getElementById("nameError").textContent = "";
+    document.getElementById("emailError").textContent = "";
+    document.getElementById("passwordError").textContent = "";
+    document.getElementById("result").textContent = "";
+
+    const name = document.getElementById("name").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value.trim();
+
+    try {
+      if (!name) {
+        throw { field: "name", message: "Name is required." };
+      }
+
+      if (!email) {
+        throw { field: "email", message: "Email is required." };
+      }
+
+      // Basic email pattern
+      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailPattern.test(email)) {
+        throw { field: "email", message: "Email format is invalid." };
+      }
+
+      if (!password) {
+        throw { field: "password", message: "Password is required." };
+      }
+
+      // If all validations pass
+      document.getElementById("result").textContent = "Registration successful!";
+      return true;
+
+    } catch (error) {
+      // Display error below the corresponding field
+      if (error.field) {
+        document.getElementById(error.field + "Error").textContent = error.message;
+      } else {
+        console.error("Unexpected error:", error);
+      }
+      return false;
+    }
+  }
+</script>
+
+</body>
+</html>

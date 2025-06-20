@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Age Validation</title>
+</head>
+<body>
+
+<h2>Enter Your Age</h2>
+<input type="text" id="ageInput" placeholder="Enter age" />
+<button onclick="validateAge()">Submit</button>
+<p id="message"></p>
+
+<script>
+  function validateAge() {
+    const ageInput = document.getElementById("ageInput").value;
+    const message = document.getElementById("message");
+
+    try {
+      const age = parseInt(ageInput);
+
+      if (isNaN(age)) {
+        throw new Error("Age must be a number.");
+      }
+
+      if (age <= 0) {
+        throw new Error("Age must be greater than 0.");
+      }
+
+      if (age > 18) {
+        message.textContent = `Valid age: ${age}`;
+        message.style.color = "green";
+      } else {
+        message.textContent = `Underage: ${age}`;
+        message.style.color = "orange";
+      }
+    } catch (error) {
+      message.textContent = "Error: " + error.message;
+      message.style.color = "red";
+    }
+  }
+</script>
+
+</body>
+</html>

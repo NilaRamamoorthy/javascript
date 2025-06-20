@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Runtime Error Handling</title>
+</head>
+<body>
+
+<h2>Runtime Error Handling Example</h2>
+<p id="output"></p>
+
+<script>
+  const output = document.getElementById("output");
+
+  try {
+    
+    console.log(num1);
+  } catch (error) {
+    output.textContent = `Error: ${error.name} - ${error.message}`;
+    output.style.color = "red";
+  }
+</script>
+
+</body>
+</html>

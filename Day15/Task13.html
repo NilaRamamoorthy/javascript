@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Error Logger</title>
+</head>
+<body>
+
+<h2>Error Logger (Stored in localStorage)</h2>
+
+<button onclick="triggerError()">Trigger Error</button>
+<button onclick="viewLogs()">View Logs</button>
+<button onclick="clearLogs()">Clear Logs</button>
+
+<pre id="logDisplay"></pre>
+
+<script>
+  
+  function logError(error) {
+    const logs = JSON.parse(localStorage.getItem("errorLogs")) || [];
+
+    const errorEntry = {
+      message: error.message,
+      stack: error.stack,
+      time: new Date().toLocaleString()
+    };
+
+    logs.push(errorEntry);
+    localStorage.setItem("errorLogs", JSON.stringify(logs));
+    console.warn("Error logged to localStorage:", errorEntry);
+  }
+
+  
+  function triggerError() {
+    try {
+      // Intentionally cause a ReferenceError
+      let result = value * 2;
+    } catch (error) {
+      logError(error);
+      alert("An error occurred and was logged.");
+    }
+  }
+
+
+  function viewLogs() {
+    const logs = JSON.parse(localStorage.getItem("errorLogs")) || [];
+    const logDisplay = document.getElementById("logDisplay");
+
+    if (logs.length === 0) {
+      logDisplay.textContent = "No logs found.";
+    } else {
+      logDisplay.textContent = logs.map((log, i) => 
+        `#${i + 1} | ${log.time}\nMessage: ${log.message}\nStack: ${log.stack}\n\n`
+      ).join('');
+    }
+  }
+
+  
+  function clearLogs() {
+    localStorage.removeItem("errorLogs");
+    document.getElementById("logDisplay").textContent = "Logs cleared.";
+  }
+</script>
+
+</body>
+</html>

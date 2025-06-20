@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Recursive Function Limit</title>
+</head>
+<body>
+
+<h2>Recursive Call with Limit</h2>
+<button onclick="startRecursion()">Start</button>
+<p id="output"></p>
+
+<script>
+  function safeRecursive(counter, limit) {
+    const output = document.getElementById("output");
+
+    if (counter > limit) {
+      output.textContent = `Stopped to prevent infinite recursion after ${limit} calls.`;
+      console.warn("Maximum recursion limit reached.");
+      return;
+    }
+
+    console.log("Recursion step:", counter);
+
+    
+    setTimeout(() => {
+      safeRecursive(counter + 1, limit);
+    }, 100);
+  }
+
+  function startRecursion() {
+    document.getElementById("output").textContent = "";
+    safeRecursive(1, 10); 
+  }
+</script>
+
+</body>
+</html>

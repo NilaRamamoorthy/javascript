@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Debugger in Loop</title>
+</head>
+<body>
+
+<h2>Open Console to view</h2>
+<button onclick="startLoop()">Start Loop</button>
+
+<script>
+  function startLoop() {
+    for (let i = 1; i <= 5; i++) {
+      console.log("Current value of i:", i);
+      debugger;
+    }
+
+    console.log("Loop completed.");
+  }
+</script>
+
+</body>
+</html>

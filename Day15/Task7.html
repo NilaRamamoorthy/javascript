@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>console.table() Example</title>
+</head>
+<body>
+
+<h2>Open console to see the table</h2>
+<button onclick="showTable()">Display Table</button>
+
+<script>
+     const users = [
+      { id: 1, name: "Alice", age: 25, city: "New York" },
+      { id: 2, name: "Bob", age: 30, city: "London" },
+      { id: 3, name: "Charlie", age: 22, city: "Tokyo" },
+      { id: 4, name: "Diana", age: 28, city: "Berlin" }
+    ];
+  function showTable() {
+    console.table(users); 
+  }
+</script>
+
+</body>
+</html>

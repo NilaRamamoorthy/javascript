@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Debug with Console</title>
+</head>
+<body>
+
+<h2>Debugging with console.warn() and console.error()</h2>
+
+<input type="text" id="ageInput" placeholder="Enter your age" />
+<button onclick="validateAge()">Validate</button>
+
+<p id="message"></p>
+
+<script>
+  function validateAge() {
+    const input = document.getElementById("ageInput").value;
+    const message = document.getElementById("message");
+
+    try {
+      const age = parseInt(input);
+
+      if (isNaN(age)) {
+        console.error("Invalid input: not a number");
+        throw new Error("Please enter a valid number.");
+      }
+
+      if (age <= 0) {
+        console.error("Invalid age: less than or equal to zero");
+        throw new Error("Age must be greater than 0.");
+      }
+
+      if (age > 0 && age <= 18) {
+        console.warn("User is underage");
+        message.textContent = "Warning: You are underage.";
+        message.style.color = "orange";
+      } else {
+        message.textContent = "Valid age.";
+        message.style.color = "green";
+      }
+
+    } catch (error) {
+      message.textContent = "Error: " + error.message;
+      message.style.color = "red";
+    }
+  }
+</script>
+
+</body>
+</html>
