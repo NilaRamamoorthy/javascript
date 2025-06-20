@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>User Registration Form</title>
+  <title>Document</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -78,12 +78,12 @@
         throw { field: "password", message: "Password is required." };
       }
 
-      // If all validations pass
+      
       document.getElementById("result").textContent = "Registration successful!";
       return true;
 
     } catch (error) {
-      // Display error below the corresponding field
+     
       if (error.field) {
         document.getElementById(error.field + "Error").textContent = error.message;
       } else {
