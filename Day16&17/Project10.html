@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Employee Attendance System</title>
+  <style>
+    :root {
+      --primary: #0b678e;
+      --danger: #dc3545;
+      --success: #28a745;
+      --light-bg: #f8f9fa;
+      --dark-text: #343a40;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 20px;
+      background: var(--light-bg);
+      color: var(--dark-text);
+    }
+
+    h2, h4 {
+      color: var(--primary);
+    }
+
+    .form-group, .filters, .actions {
+      margin: 10px 0;
+    }
+
+    input, select, button {
+      padding: 10px;
+      margin: 5px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+    }
+
+    button {
+      background-color: var(--primary);
+      color: white;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      border: none;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    .danger {
+      background-color: var(--danger);
+    }
+
+    .danger:hover {
+      background-color: #a71d2a;
+    }
+
+    .success {
+      background-color: var(--success);
+    }
+
+    .success:hover {
+      background-color: #1e7e34;
+    }
+
+    table {
+      width: 100%;
+      margin-top: 20px;
+      border-collapse: collapse;
+      background: white;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+
+    th, td {
+      padding: 12px;
+      text-align: center;
+      border-bottom: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #f1f1f1;
+      color: #333;
+    }
+
+    @media (max-width: 768px) {
+      table, thead, tbody, th, td, tr {
+        display: block;
+      }
+
+      td {
+        position: relative;
+        padding-left: 50%;
+        text-align: left;
+      }
+
+      td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 15px;
+        top: 12px;
+        font-weight: bold;
+        text-transform: uppercase;
+      }
+
+      thead {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Employee Attendance Management System</h2>
+
+  <div class="form-group">
+    <input id="name" placeholder="Employee Name">
+    <input id="id" placeholder="Employee ID">
+    <input id="department" placeholder="Department">
+    <button onclick="addEmployee()">Add Employee</button>
+  </div>
+
+  <div class="filters">
+    <select id="filterDept" onchange="renderEmployees()">
+      <option value="">All Departments</option>
+    </select>
+
+    <select id="filterStatus" onchange="renderEmployees()">
+      <option value="">All Statuses</option>
+      <option value="Present">Present</option>
+      <option value="Absent">Absent</option>
+    </select>
+
+    <select id="sortOption" onchange="renderEmployees()">
+      <option value="">Sort By</option>
+      <option value="name">Name</option>
+      <option value="count">Attendance Count</option>
+    </select>
+
+    <button class="danger" onclick="clearAllData()">Clear All Data</button>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>ID</th>
+        <th>Department</th>
+        <th>Status</th>
+        <th>Count</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody id="employeeTable"></tbody>
+  </table>
+
+  <script>
+    let employees = JSON.parse(localStorage.getItem('employees')) || [];
+
+    function saveData() {
+      localStorage.setItem('employees', JSON.stringify(employees));
+    }
+
+    function addEmployee() {
+      const name = document.getElementById('name').value.trim();
+      const id = document.getElementById('id').value.trim();
+      const dept = document.getElementById('department').value.trim();
+
+      if (!name || !id || !dept) {
+        return alert("Please fill in all fields.");
+      }
+
+      const duplicate = employees.some(emp => emp.id === id);
+      if (duplicate) {
+        return alert("Employee ID must be unique!");
+      }
+
+      employees.push({ name, id, department: dept, status: "", count: 0 });
+      saveData();
+      document.getElementById('name').value = "";
+      document.getElementById('id').value = "";
+      document.getElementById('department').value = "";
+      renderEmployees();
+    }
+
+    function markAttendance(index, status) {
+      employees[index].status = status;
+      if (status === "Present") employees[index].count++;
+      saveData();
+      renderEmployees();
+    }
+
+    function clearAllData() {
+      if (confirm("Are you sure you want to delete all employee data?")) {
+        localStorage.removeItem('employees');
+        employees = [];
+        renderEmployees();
+      }
+    }
+
+    function renderEmployees() {
+      const table = document.getElementById("employeeTable");
+      table.innerHTML = "";
+
+      const deptFilter = document.getElementById('filterDept').value;
+      const statusFilter = document.getElementById('filterStatus').value;
+      const sort = document.getElementById('sortOption').value;
+
+      let filtered = employees.filter(emp => {
+        return (!deptFilter || emp.department === deptFilter) &&
+               (!statusFilter || emp.status === statusFilter);
+      });
+
+      if (sort === "name") {
+        filtered.sort((a, b) => a.name.localeCompare(b.name));
+      } else if (sort === "count") {
+        filtered.sort((a, b) => b.count - a.count);
+      }
+
+      filtered.forEach((emp, index) => {
+        const row = `<tr>
+          <td data-label="Name">${emp.name}</td>
+          <td data-label="ID">${emp.id}</td>
+          <td data-label="Department">${emp.department}</td>
+          <td data-label="Status">${emp.status || '-'}</td>
+          <td data-label="Count">${emp.count}</td>
+          <td data-label="Actions">
+            <button class="success" onclick="markAttendance(${index}, 'Present')">Present</button>
+            <button class="danger" onclick="markAttendance(${index}, 'Absent')">Absent</button>
+          </td>
+        </tr>`;
+        table.innerHTML += row;
+      });
+
+      updateFilterOptions();
+    }
+
+    function updateFilterOptions() {
+      const filterDept = document.getElementById("filterDept");
+      const uniqueDepts = [...new Set(employees.map(emp => emp.department))];
+      filterDept.innerHTML = '<option value="">All Departments</option>';
+      uniqueDepts.forEach(dept => {
+        filterDept.innerHTML += `<option value="${dept}">${dept}</option>`;
+      });
+    }
+
+    renderEmployees();
+  </script>
+
+</body>
+</html>

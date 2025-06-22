@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Product Catalog</title>
+  <style>
+    .product {
+      border: 1px solid #ccc;
+      padding: 10px;
+      margin: 10px;
+      cursor: pointer;
+    }
+    .product:hover {
+      background-color: #f8f8f8;
+    }
+    .controls {
+      margin-bottom: 15px;
+    }
+  </style>
+</head>
+<body>
+  <h2>Product Catalog</h2>
+
+  <div class="controls">
+    <label for="priceFilter">Show products under: </label>
+    <select id="priceFilter">
+      <option value="all">All Prices</option>
+      <option value="500">Under $500</option>
+      <option value="200">Under $200</option>
+    </select>
+
+    <button onclick="sortByPrice()">Sort by Price: Low to High</button>
+  </div>
+
+  <div id="productList"></div>
+  <div id="productDetails" style="margin-top:20px;"></div>
+
+  <script>
+    let allProducts = [];
+
+    // Fetch products from products.json
+    fetch('products.json')
+      .then(response => response.json())
+      .then(data => {
+        allProducts = data;
+        displayProducts(allProducts);
+      })
+      .catch(error => {
+        console.error("Error loading products:", error);
+      });
+
+    // Display products
+    function displayProducts(products) {
+      const list = document.getElementById("productList");
+      list.innerHTML = '';
+      products.forEach(product => {
+        const div = document.createElement('div');
+        div.className = 'product';
+        div.innerHTML = `
+          <strong>${product.name}</strong><br>
+          Price: $${product.price}<br>
+          Category: ${product.category}
+        `;
+        div.onclick = () => showDetails(product);
+        list.appendChild(div);
+      });
+    }
+
+    // Show product details
+    function showDetails(product) {
+      const details = document.getElementById("productDetails");
+      details.innerHTML = `
+        <h3>Product Details</h3>
+        <p><strong>Name:</strong> ${product.name}</p>
+        <p><strong>Price:</strong> $${product.price}</p>
+        <p><strong>Category:</strong> ${product.category}</p>
+      `;
+    }
+
+    // Filter by price
+    document.getElementById("priceFilter").addEventListener("change", function () {
+      const selected = this.value;
+      let filtered = allProducts;
+      if (selected !== "all") {
+        filtered = allProducts.filter(p => p.price < parseInt(selected));
+      }
+      displayProducts(filtered);
+    });
+
+    // Sort products by price (low to high)
+    function sortByPrice() {
+      const sorted = [...allProducts].sort((a, b) => a.price - b.price);
+      displayProducts(sorted);
+    }
+  </script>
+</body>
+</html>

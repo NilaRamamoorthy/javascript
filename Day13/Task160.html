@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Task160</title>
+</head>
+<body>
+  <h2>Fetched Data:</h2>
+  <ul id="output"></ul>
+
+  <script>
+    fetch('data.json')
+      .then(response => response.json())
+      .then(data => {
+        const output = document.getElementById("output");
+        data.forEach(person => {
+          const li = document.createElement("li");
+          li.textContent = `Name: ${person.name}, Age: ${person.age}, City: ${person.city}`;
+          output.appendChild(li);
+        });
+      })
+      .catch(error => {
+        document.getElementById("output").textContent = "Error: " + error.message;
+      });
+  </script>
+</body>
+</html>

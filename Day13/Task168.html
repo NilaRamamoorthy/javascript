@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Task168</title>
+</head>
+<body>
+  <h2>User List</h2>
+  <input type="text" id="nameInput" placeholder="Enter name to remove">
+  <button onclick="removeUser()">Remove User</button>
+  <ul id="output"></ul>
+
+  <script>
+    let users = [];
+
+    // Fetch the data.json file
+    fetch('data.json')
+      .then(response => response.json())
+      .then(data => {
+        users = data;
+        localStorage.setItem('users', JSON.stringify(users)); 
+        displayUsers(users);
+      })
+      .catch(error => {
+        console.error("Failed to load JSON:", error);
+      });
+
+    function displayUsers(data) {
+      const output = document.getElementById("output");
+      output.innerHTML = '';
+      data.forEach(user => {
+        const li = document.createElement("li");
+        li.textContent = `Name: ${user.name}, Age: ${user.age}`;
+        output.appendChild(li);
+      });
+    }
+
+    function removeUser() {
+      const nameToRemove = document.getElementById("nameInput").value.trim();
+      let data = JSON.parse(localStorage.getItem("users")) || [];
+      const updated = data.filter(user => user.name.toLowerCase() !== nameToRemove.toLowerCase());
+
+      // Update localStorage and UI
+      localStorage.setItem("users", JSON.stringify(updated));
+      displayUsers(updated);
+    }
+  </script>
+</body>
+</html>

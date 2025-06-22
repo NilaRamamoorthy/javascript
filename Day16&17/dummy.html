@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Drag & Drop File Uploader</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f4f4f4;
+      padding: 30px;
+      text-align: center;
+    }
+
+    h2 {
+      color: #007bff;
+      margin-bottom: 20px;
+    }
+
+    .drop-area {
+      border: 3px dashed #aaa;
+      border-radius: 10px;
+      padding: 50px 20px;
+      background-color: #fff;
+      transition: 0.3s;
+      max-width: 500px;
+      margin: auto;
+      cursor: pointer;
+    }
+
+    .drop-area.hover {
+      border-color: #007bff;
+      background-color: #e9f2ff;
+    }
+
+    .preview {
+      margin-top: 20px;
+      text-align: left;
+      max-width: 500px;
+      margin-inline: auto;
+    }
+
+    .file-item {
+      background: #fff;
+      padding: 10px;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      box-shadow: 0 0 6px rgba(0,0,0,0.1);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .file-info {
+      flex: 1;
+      margin-right: 10px;
+    }
+
+    .progress-bar {
+      height: 6px;
+      background: #007bff;
+      width: 0%;
+      border-radius: 10px;
+      transition: width 0.3s ease;
+    }
+
+    .thumb {
+      width: 50px;
+      height: 50px;
+      object-fit: cover;
+      border-radius: 4px;
+      margin-right: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>📤 Drag & Drop File Uploader</h2>
+
+  <div class="drop-area" id="dropArea">
+    <p>Drag & Drop files here or click to upload</p>
+    <input type="file" id="fileInput" multiple style="display: none;" />
+  </div>
+
+  <div class="preview" id="preview"></div>
+
+  <script>
+    const dropArea = document.getElementById('dropArea');
+    const fileInput = document.getElementById('fileInput');
+    const preview = document.getElementById('preview');
+
+    dropArea.addEventListener('click', () => fileInput.click());
+
+    ['dragenter', 'dragover'].forEach(eventName => {
+      dropArea.addEventListener(eventName, e => {
+        e.preventDefault();
+        dropArea.classList.add('hover');
+      });
+    });
+
+    ['dragleave', 'drop'].forEach(eventName => {
+      dropArea.addEventListener(eventName, e => {
+        e.preventDefault();
+        dropArea.classList.remove('hover');
+      });
+    });
+
+    dropArea.addEventListener('drop', e => {
+      handleFiles(e.dataTransfer.files);
+    });
+
+    fileInput.addEventListener('change', () => {
+      handleFiles(fileInput.files);
+    });
+
+    function handleFiles(files) {
+      [...files].forEach(file => {
+        const fileItem = document.createElement('div');
+        fileItem.className = 'file-item';
+
+        const fileInfo = document.createElement('div');
+        fileInfo.className = 'file-info';
+        fileInfo.innerHTML = `
+          <strong>${file.name}</strong><br>
+          ${(file.size / 1024).toFixed(2)} KB
+          <div class="progress-bar"></div>
+        `;
+
+        fileItem.appendChild(fileInfo);
+
+        // Preview image if it's an image
+        if (file.type.startsWith("image/")) {
+          const img = document.createElement('img');
+          img.className = 'thumb';
+          img.src = URL.createObjectURL(file);
+          fileItem.prepend(img);
+        }
+
+        preview.appendChild(fileItem);
+
+        simulateUpload(fileInfo.querySelector('.progress-bar'));
+      });
+    }
+
+    function simulateUpload(progressBar) {
+      let progress = 0;
+      const interval = setInterval(() => {
+        progress += 10;
+        progressBar.style.width = progress + '%';
+
+        if (progress >= 100) clearInterval(interval);
+      }, 150);
+    }
+  </script>
+
+</body>
+</html>

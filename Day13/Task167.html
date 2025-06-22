@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Task167</title>
+</head>
+<body>
+  <h2>User List</h2>
+  <button onclick="addUser()">Add User</button>
+  <ul id="output"></ul>
+
+  <script>
+    let users = [];
+
+    // Fetch data.json and store in localStorage
+    fetch('data.json')
+      .then(response => response.json())
+      .then(data => {
+        users = data;
+        localStorage.setItem('users', JSON.stringify(users));
+        displayUsers(users);
+      })
+      .catch(error => {
+        console.error('Error loading JSON:', error);
+      });
+
+    function displayUsers(data) {
+      const output = document.getElementById("output");
+      output.innerHTML = '';
+      data.forEach(user => {
+        const li = document.createElement('li');
+        li.textContent = `Name: ${user.name}, Age: ${user.age}`;
+        output.appendChild(li);
+      });
+    }
+
+    function addUser() {
+      const newUser = { name: "Charlie", age: 35 };
+      let current = JSON.parse(localStorage.getItem('users')) || [];
+      current.push(newUser);
+
+      localStorage.setItem('users', JSON.stringify(current));
+      displayUsers(current);
+    }
+  </script>
+</body>
+</html>

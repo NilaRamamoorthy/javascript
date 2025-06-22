@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Task158</title>
+</head>
+<body>
+  <h2>Converted JSON String:</h2>
+  <p id="output"></p>
+
+  <script>
+    const person = {
+      name: "Alice",
+      age: 30,
+      city: "New York"
+    };
+
+    const jsonString = JSON.stringify(person);
+    console.log(person);
+    
+    document.getElementById("output").textContent = jsonString;
+  </script>
+</body>
+</html>

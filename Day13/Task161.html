@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Task161</title>
+</head>
+<body>
+  <h2>People Data (From LocalStorage)</h2>
+  <button onclick="storeData()">Store Data</button>
+  <button onclick="loadData()">Load Data</button>
+  <ul id="output"></ul>
+
+  <script>
+    // Array of objects to store
+    const people = [
+    {
+        "name": "Alice",
+        "age": 30,
+        "city": "New York"
+    },
+    {
+        "name": "John",
+        "age": 36,
+        "city": "London"
+    },
+    {
+        "name": "David",
+        "age": 29,
+        "city": "New York"
+    }
+];
+
+  
+    function storeData() {
+      localStorage.setItem("peopleList", JSON.stringify(people));
+      alert("Data stored in LocalStorage!");
+    }
+
+    
+    function loadData() {
+      const stored = localStorage.getItem("peopleList");
+      if (stored) {
+        const data = JSON.parse(stored);
+        const output = document.getElementById("output");
+        output.innerHTML = ""; 
+        data.forEach(person => {
+          const li = document.createElement("li");
+          li.textContent = `Name: ${person.name}, Age: ${person.age}, City: ${person.city}`;
+          output.appendChild(li);
+        });
+      } else {
+        alert("No data found in LocalStorage.");
+      }
+    }
+  </script>
+</body>
+</html>

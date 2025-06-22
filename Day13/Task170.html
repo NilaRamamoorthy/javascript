@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Task170</title>
+</head>
+<body>
+  <h2>User Data</h2>
+  <ul id="output"></ul>
+  <p id="error" style="color:red;"></p>
+
+  <script>
+    const output = document.getElementById('output');
+    const errorMsg = document.getElementById('error');
+
+    fetch('https://jsonplaceholder.typicode.com/usersX')
+    // use 'https://jsonplaceholder.typicode.com/users' to fetch without error
+      .then(response => {
+        if (!response.ok) {
+          // Handle HTTP errors (like 404, 500)
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then(data => {
+       
+        data.forEach(user => {
+          const li = document.createElement('li');
+          li.textContent = user.name;
+          output.appendChild(li);
+        });
+      })
+      .catch(error => {
+        console.error('Fetch error:', error);
+        errorMsg.textContent = 'Something went wrong while fetching the data.';
+      });
+  </script>
+</body>
+</html>

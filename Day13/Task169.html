@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Task169</title>
+</head>
+<body>
+  <h2>Select a User</h2>
+
+  <select id="userDropdown">
+    <option value="">-- Select a User --</option>
+  </select>
+
+  <script>
+    fetch('data.json')
+      .then(response => response.json())
+      .then(data => {
+        const dropdown = document.getElementById("userDropdown");
+
+        data.forEach(user => {
+          const option = document.createElement("option");
+          option.value = user.id;      // set ID as value
+          option.textContent = user.name; // show name
+          dropdown.appendChild(option);
+        });
+      })
+      .catch(error => {
+        console.error("Failed to load data:", error);
+      });
+  </script>
+</body>
+</html>

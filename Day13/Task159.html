@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Task159</title>
+</head>
+<body>
+  <h2>Parsed JavaScript Object:</h2>
+  <p id="output"></p>
+
+  <script>
+ 
+    const jsonString = '{"name": "Alice", "age": 30, "city": "New York"}';
+
+    const person = JSON.parse(jsonString);
+
+    document.getElementById("output").textContent = 
+      `Name: ${person.name}, Age: ${person.age}, City: ${person.city}`;
+  </script>
+</body>
+</html>

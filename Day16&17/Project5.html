@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Loan EMI Calculator</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f0f0f0;
+      padding: 30px;
+    }
+
+    h2 {
+      color: #007bff;
+      margin-bottom: 20px;
+    }
+
+    .container {
+      background: #fff;
+      padding: 25px;
+      border-radius: 10px;
+      max-width: 500px;
+      margin: auto;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      margin-bottom: 20px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+    }
+
+    button {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 12px;
+      width: 100%;
+      font-size: 16px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    .results {
+      margin-top: 25px;
+      font-size: 16px;
+    }
+
+    .results span {
+      display: block;
+      margin: 8px 0;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2> Loan EMI Calculator</h2>
+
+    <input type="number" id="loanAmount" placeholder="Loan Amount (₹)">
+    <input type="number" id="interestRate" placeholder="Annual Interest Rate (%)">
+    <input type="number" id="loanTenure" placeholder="Loan Tenure (Years)">
+
+    <button onclick="calculateEMI()">Calculate EMI</button>
+
+    <div class="results" id="result"></div>
+  </div>
+
+  <script>
+    function calculateEMI() {
+      const P = parseFloat(document.getElementById("loanAmount").value);
+      const annualRate = parseFloat(document.getElementById("interestRate").value);
+      const years = parseInt(document.getElementById("loanTenure").value);
+
+      if (!P || !annualRate || !years) {
+        alert("Please fill in all fields correctly.");
+        return;
+      }
+
+      const R = annualRate / 12 / 100; // Monthly interest rate
+      const N = years * 12; // Number of months
+
+      const emi = (P * R * Math.pow(1 + R, N)) / (Math.pow(1 + R, N) - 1);
+      const totalPayment = emi * N;
+      const totalInterest = totalPayment - P;
+
+      document.getElementById("result").innerHTML = `
+        <span><strong>Monthly EMI:</strong> ₹${emi.toFixed(2)}</span>
+        <span><strong>Total Interest:</strong> ₹${totalInterest.toFixed(2)}</span>
+        <span><strong>Total Payment:</strong> ₹${totalPayment.toFixed(2)}</span>
+      `;
+    }
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Advanced Task Manager</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f2f2f2;
+      padding: 20px;
+      margin: 0;
+    }
+
+    h2 {
+      color: #007bff;
+    }
+
+    input, select, button {
+      padding: 10px;
+      margin: 5px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+    }
+
+    .task-form, .filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+
+    .task-list {
+      background: #fff;
+      border-radius: 8px;
+      padding: 15px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .task-item {
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 1px solid #eee;
+      padding: 10px 0;
+    }
+
+    .task-item:last-child {
+      border-bottom: none;
+    }
+
+    .completed {
+      text-decoration: line-through;
+      color: gray;
+    }
+
+    .task-actions button {
+      margin-left: 5px;
+    }
+
+    @media (max-width: 600px) {
+      .task-form, .filters {
+        flex-direction: column;
+      }
+
+      .task-item {
+        flex-direction: column;
+        align-items: start;
+      }
+
+      .task-actions {
+        margin-top: 5px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <h2>Advanced Task Manager</h2>
+
+  <div class="task-form">
+    <input type="text" id="taskInput" placeholder="Task name">
+    <input type="date" id="dueDate">
+    <select id="category">
+      <option value="Work">Work</option>
+      <option value="Personal">Personal</option>
+      <option value="Study">Study</option>
+    </select>
+    <button onclick="addTask()">Add Task</button>
+  </div>
+
+  <div class="filters">
+    <select id="filterCategory" onchange="renderTasks()">
+      <option value="">All Categories</option>
+      <option value="Work">Work</option>
+      <option value="Personal">Personal</option>
+      <option value="Study">Study</option>
+    </select>
+
+    <select id="filterStatus" onchange="renderTasks()">
+      <option value="">All Statuses</option>
+      <option value="completed">Completed</option>
+      <option value="incomplete">Incomplete</option>
+    </select>
+
+    <button onclick="sortByDate()">Sort by Due Date</button>
+  </div>
+
+  <div class="task-list" id="taskList"></div>
+
+  <script>
+    let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+    let sortAsc = true;
+
+    function saveTasks() {
+      localStorage.setItem("tasks", JSON.stringify(tasks));
+    }
+
+    function addTask() {
+      const name = document.getElementById("taskInput").value.trim();
+      const due = document.getElementById("dueDate").value;
+      const cat = document.getElementById("category").value;
+
+      if (!name || !due) {
+        return alert("Please enter both task name and due date.");
+      }
+
+      const today = new Date().toISOString().split("T")[0];
+      if (due < today) {
+        return alert("Due date cannot be in the past.");
+      }
+
+      tasks.push({ name, due, category: cat, completed: false });
+      saveTasks();
+
+      document.getElementById("taskInput").value = "";
+      document.getElementById("dueDate").value = "";
+      renderTasks();
+    }
+
+    function deleteTask(index) {
+      tasks.splice(index, 1);
+      saveTasks();
+      renderTasks();
+    }
+
+    function toggleComplete(index) {
+      tasks[index].completed = !tasks[index].completed;
+      saveTasks();
+      renderTasks();
+    }
+
+    function editTask(index) {
+      const task = tasks[index];
+
+      const newName = prompt("Edit task name:", task.name);
+      if (newName === null || newName.trim() === "") return;
+
+      const newDue = prompt("Edit due date (YYYY-MM-DD):", task.due);
+      if (newDue === null || newDue.trim() === "") return;
+
+      const today = new Date().toISOString().split("T")[0];
+      if (newDue < today) {
+        alert("Due date cannot be in the past.");
+        return;
+      }
+
+      const newCategory = prompt("Edit category (Work, Personal, Study):", task.category);
+      if (newCategory === null || newCategory.trim() === "") return;
+
+      tasks[index] = {
+        ...task,
+        name: newName.trim(),
+        due: newDue,
+        category: newCategory.trim()
+      };
+
+      saveTasks();
+      renderTasks();
+    }
+
+    function sortByDate() {
+      tasks.sort((a, b) =>
+        sortAsc ? new Date(a.due) - new Date(b.due) : new Date(b.due) - new Date(a.due)
+      );
+      sortAsc = !sortAsc;
+      renderTasks();
+    }
+
+    function renderTasks() {
+      const list = document.getElementById("taskList");
+      const filterCat = document.getElementById("filterCategory").value;
+      const filterStatus = document.getElementById("filterStatus").value;
+
+      list.innerHTML = "";
+
+      const filtered = tasks.filter(task => {
+        const catMatch = !filterCat || task.category === filterCat;
+        const statusMatch =
+          filterStatus === "completed" ? task.completed :
+          filterStatus === "incomplete" ? !task.completed : true;
+        return catMatch && statusMatch;
+      });
+
+      if (filtered.length === 0) {
+        list.innerHTML = "<p>No tasks found.</p>";
+        return;
+      }
+
+      filtered.forEach((task, index) => {
+        const item = document.createElement("div");
+        item.className = "task-item";
+
+        const info = `
+          <div>
+            <strong class="${task.completed ? 'completed' : ''}">${task.name}</strong><br>
+            Due: ${task.due} | Category: ${task.category}
+          </div>
+        `;
+
+        const actions = `
+          <div class="task-actions">
+            <button onclick="toggleComplete(${index})">${task.completed ? "Undo" : "Complete"}</button>
+            <button onclick="editTask(${index})">Edit</button>
+            <button onclick="deleteTask(${index})">Delete</button>
+          </div>
+        `;
+
+        item.innerHTML = info + actions;
+        list.appendChild(item);
+      });
+    }
+
+    renderTasks();
+  </script>
+
+</body>
+</html>
