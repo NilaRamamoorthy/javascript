@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Paginated Image Gallery</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      text-align: center;
+    }
+    #gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 15px;
+      margin-top: 20px;
+    }
+    .image-item img {
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+    }
+    .pagination {
+      margin-top: 20px;
+    }
+    .pagination button {
+      margin: 0 5px;
+      padding: 8px 16px;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Paginated Image Gallery</h2>
+  <div class="pagination">
+    <button onclick="changePage(-1)">Previous</button>
+    <span id="pageNum">Page 1</span>
+    <button onclick="changePage(1)">Next</button>
+  </div>
+
+  <div id="gallery"></div>
+
+  <script>
+    let currentPage = 1;
+    const limit = 9;
+
+    async function loadImages(page) {
+      const gallery = document.getElementById('gallery');
+      gallery.innerHTML = '';
+      document.getElementById('pageNum').textContent = `Page ${page}`;
+
+      try {
+        const response = await fetch(`https://picsum.photos/v2/list?page=${page}&limit=${limit}`);
+        const images = await response.json();
+
+        if (images.length === 0) {
+          gallery.innerHTML = '<p>No more images.</p>';
+          return;
+        }
+
+        images.forEach(image => {
+          const div = document.createElement('div');
+          div.className = 'image-item';
+          div.innerHTML = `
+            <img src="https://picsum.photos/id/${image.id}/400/300" alt="By ${image.author}">
+            <p>${image.author}</p>
+          `;
+          gallery.appendChild(div);
+        });
+
+      } catch (error) {
+        gallery.innerHTML = `<p>Error loading images.</p>`;
+      }
+    }
+
+    function changePage(delta) {
+      if (currentPage + delta < 1) return;
+      currentPage += delta;
+      loadImages(currentPage);
+    }
+    loadImages(currentPage);
+  </script>
+
+</body>
+</html>

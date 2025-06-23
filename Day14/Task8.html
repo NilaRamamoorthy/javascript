@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Comments Loader</title>
+  <style>
+    .comment {
+      border-bottom: 1px solid #ccc;
+      padding: 10px 0;
+    }
+    .comment h4 {
+      margin: 0;
+    }
+    .comment p {
+      margin: 5px 0 0;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Load Comments</h2>
+  <button onclick="loadComments()">Fetch Comments</button>
+
+  <div id="comments"></div>
+
+  <script>
+    function loadComments() {
+      const xhr = new XMLHttpRequest();
+      xhr.open('GET', 'https://jsonplaceholder.typicode.com/comments?_limit=5', true);
+
+      xhr.onload = function () {
+        if (xhr.status === 200) {
+          const comments = JSON.parse(xhr.responseText);
+          const container = document.getElementById('comments');
+          container.innerHTML = ''; 
+
+          comments.forEach(comment => {
+            const div = document.createElement('div');
+            div.classList.add('comment');
+            div.innerHTML = `
+              <h4>${comment.name} (<em>${comment.email}</em>)</h4>
+              <p>${comment.body}</p>
+            `;
+            container.appendChild(div);
+          });
+        } else {
+          document.getElementById('comments').innerHTML = `<p>Error loading comments</p>`;
+        }
+      };
+
+      xhr.onerror = function () {
+        document.getElementById('comments').innerHTML = `<p>Network error</p>`;
+      };
+
+      xhr.send();
+    }
+  </script>
+
+</body>
+</html>

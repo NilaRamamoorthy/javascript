@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>GitHub User Profile</title>
+  <style>
+    #profile {
+      margin-top: 20px;
+      padding: 15px;
+      border: 1px solid #ccc;
+      width: 300px;
+    }
+    img {
+      width: 100px;
+      border-radius: 50%;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>GitHub User Search</h2>
+  <input type="text" id="usernameInput" placeholder="Enter GitHub username">
+  <button onclick="getUser()">Get Profile</button>
+
+  <div id="profile"></div>
+
+  <script>
+    async function getUser() {
+      const username = document.getElementById('usernameInput').value;
+      const url = `https://api.github.com/users/${username}`;
+
+      try {
+        const response = await fetch(url);
+        const data = await response.json();
+
+        if (response.ok) {
+          document.getElementById('profile').innerHTML = `
+            <img src="${data.avatar_url}" alt="Avatar">
+            <h3>${data.name || 'No name available'}</h3>
+            <p><strong>Username:</strong> ${data.login}</p>
+            <p><strong>Public Repos:</strong> ${data.public_repos}</p>
+            <p><strong>Followers:</strong> ${data.followers}</p>
+            <p><a href="${data.html_url}" target="_blank">View on GitHub</a></p>
+          `;
+        } else {
+          document.getElementById('profile').innerText = `User not found.`;
+        }
+      } catch (error) {
+        document.getElementById('profile').innerText = `Error fetching profile.`;
+      }
+    }
+  </script>
+
+</body>
+</html>

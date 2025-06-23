@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Exchange Rates</title>
+</head>
+<body>
+
+  <h2>Exchange Rates (Base: USD)</h2>
+  <button onclick="fetchRates()">Get Rates</button>
+  <div id="output"></div>
+
+  <script>
+    async function fetchRates() {
+      const output = document.getElementById('output');
+      output.innerText = 'Loading...';
+
+      try {
+        const res = await fetch('https://api.frankfurter.app/latest?from=USD');
+        const data = await res.json();
+
+        output.innerHTML = '';
+        ['EUR', 'INR', 'JPY', 'GBP'].forEach(curr => {
+          if (data.rates[curr]) {
+            output.innerHTML += `<p>${curr}: ${data.rates[curr]}</p>`;
+          }
+        });
+      } catch (err) {
+        output.innerText = 'Failed to fetch. Check your connection or try again later.';
+        console.error(err);
+      }
+    }
+  </script>
+
+</body>
+</html>

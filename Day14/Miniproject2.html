@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Air Quality Checker</title>
+  <style>
+    body {
+      max-width: 600px;
+      margin: auto;
+    }
+    select, button {
+      padding: 8px;
+      font-size: 16px;
+      margin-right: 10px;
+    }
+    #output {
+      margin-top: 20px;
+      padding: 15px;
+      background: #ebb8b8;
+    }
+    .bad {
+      border-left-color: #dc3545;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Real-Time Air Quality Checker</h2>
+
+  <label for="citySelect">Select City:</label>
+  <select id="citySelect">
+    <option value="Delhi">Delhi</option>
+    <option value="Mumbai">Mumbai</option>
+    <option value="Los Angeles">Los Angeles</option>
+    <option value="London">London</option>
+    <option value="Beijing">Beijing</option>
+  </select>
+
+  <button onclick="checkAQI()">Check AQI</button>
+
+  <div id="output"></div>
+
+  <script>
+    const apiKey = 'oWbRqDDwCEr1Rk5VcOCh9w==89mPUQfo0nN6E1XS'; // API Ninjas key
+
+    async function checkAQI() {
+      const city = document.getElementById('citySelect').value;
+      const output = document.getElementById('output');
+      output.innerHTML = 'Fetching air quality data...';
+
+      try {
+        const res = await fetch(`https://api.api-ninjas.com/v1/airquality?city=${city}`, {
+          headers: { 'X-Api-Key': apiKey }
+        });
+
+        if (!res.ok) throw new Error('API Error');
+        const data = await res.json();
+
+        const aqi = data.overall_aqi;
+        const pm25 = data.PM2_5.concentration;
+        const pm10 = data.PM10.concentration;
+
+        const healthMsg = getHealthAdvice(aqi);
+        const className = aqi > 100 ? 'bad' : '';
+
+        output.className = className;
+        output.innerHTML = `
+          <h3>${city}</h3>
+          <p><strong>Air Quality Index (AQI):</strong> ${aqi}</p>
+          <p>PM2.5: ${pm25} µg/m³</p>
+          <p>PM10: ${pm10} µg/m³</p>
+          <p><strong>Health Advice:</strong> ${healthMsg}</p>
+        `;
+      } catch (err) {
+        output.className = 'bad';
+        output.innerHTML = `<p style="color:red;">Failed to fetch AQI data. Check API key or connection.</p>`;
+        console.error(err);
+      }
+    }
+
+    function getHealthAdvice(aqi) {
+      if (aqi <= 50) return 'Good – Air quality is satisfactory.';
+      if (aqi <= 100) return 'Moderate – Acceptable, but some pollutants may be a concern.';
+      if (aqi <= 150) return 'Unhealthy for sensitive groups.';
+      if (aqi <= 200) return 'Unhealthy – Everyone may begin to experience health effects.';
+      if (aqi <= 300) return 'Very Unhealthy – Health warnings of emergency conditions.';
+      return 'Hazardous – Serious health effects, avoid outdoor activities.';
+    }
+  </script>
+
+</body>
+</html>
