@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Mini Chat App</title>
@@ -26,12 +27,12 @@
     }
 
     .sent {
-      background: #d1e7dd;
+      background: #d4d1f7;
       text-align: right;
     }
 
     .received {
-      background: #f8d7da;
+      background: #f2e3ff;
       text-align: left;
     }
 
@@ -43,7 +44,7 @@
     }
 
     #msgInput {
-      width: 100%;
+      width: 95%;
       padding: 10px;
       font-size: 14px;
     }
@@ -56,66 +57,68 @@
     }
   </style>
 </head>
+
 <body>
 
-<h2>Chat Application</h2>
+  <h2>Chat Application</h2>
 
-<div id="chatBox"></div>
+  <div id="chatBox"></div>
 
-<input type="text" id="msgInput" placeholder="Type your message..." />
-<button onclick="sendMessage()">Send</button>
+  <input type="text" id="msgInput" placeholder="Type your message..." />
+  <button onclick="sendMessage()">Send</button>
 
-<script>
-  const chatBox = document.getElementById("chatBox");
-  const msgInput = document.getElementById("msgInput");
+  <script>
+    const chatBox = document.getElementById("chatBox");
+    const msgInput = document.getElementById("msgInput");
 
-  // Load messages from localStorage on page load
-  window.onload = function () {
-    const messages = JSON.parse(localStorage.getItem("chatMessages")) || [];
-    messages.forEach(showMessage);
-  };
-
-  function sendMessage() {
-    const text = msgInput.value.trim();
-    if (!text) return;
-
-    const msgObj = {
-      type: "sent",
-      text: text,
-      time: new Date().toLocaleTimeString()
+    // Load messages from localStorage on page load
+    window.onload = function () {
+      const messages = JSON.parse(localStorage.getItem("chatMessages")) || [];
+      messages.forEach(showMessage);
     };
 
-    storeMessage(msgObj);
-    showMessage(msgObj);
+    function sendMessage() {
+      const text = msgInput.value.trim();
+      if (!text) return;
 
-    // Simulate a received reply after 1 second
-    setTimeout(() => {
-      const reply = {
-        type: "received",
-        text: "Auto-reply: " + text,
+      const msgObj = {
+        type: "sent",
+        text: text,
         time: new Date().toLocaleTimeString()
       };
-      storeMessage(reply);
-      showMessage(reply);
-    }, 1000);
 
-    msgInput.value = "";
-  }
+      storeMessage(msgObj);
+      showMessage(msgObj);
 
-  function showMessage(msg) {
-    const msgDiv = document.createElement("div");
-    msgDiv.className = "message " + msg.type;
-    msgDiv.innerHTML = `${msg.text}<span class="timestamp">${msg.time}</span>`;
-    chatBox.appendChild(msgDiv);
-    chatBox.scrollTop = chatBox.scrollHeight;
-  }
+      // Simulate a received reply after 1 second
+      setTimeout(() => {
+        const reply = {
+          type: "received",
+          text: "Auto-reply: " + text,
+          time: new Date().toLocaleTimeString()
+        };
+        storeMessage(reply);
+        showMessage(reply);
+      }, 1000);
 
-  function storeMessage(msg) {
-    const messages = JSON.parse(localStorage.getItem("chatMessages")) || [];
-    messages.push(msg);
-    localStorage.setItem("chatMessages", JSON.stringify(messages));
-  }
-</script>
+      msgInput.value = "";
+    }
+
+    function showMessage(msg) {
+      const msgDiv = document.createElement("div");
+      msgDiv.className = "message " + msg.type;
+      msgDiv.innerHTML = `${msg.text}<span class="timestamp">${msg.time}</span>`;
+      chatBox.appendChild(msgDiv);
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    function storeMessage(msg) {
+      const messages = JSON.parse(localStorage.getItem("chatMessages")) || [];
+      messages.push(msg);
+      localStorage.setItem("chatMessages", JSON.stringify(messages));
+    }
+  </script>
 
 </body>
+
 </html>
